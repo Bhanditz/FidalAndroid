@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FidalApi api = new FidalApi();
+        FidalApi api = FidalApi.get();
         api.getCalendar(2018, FidalApi.Month.SEPTEMBER, FidalApi.Level.ANY, FidalApi.Region.EMILIA_ROMAGNA, FidalApi.Type.ANY,
                 FidalApi.Category.ANY, false, FidalApi.Approval.ANY, FidalApi.ApprovalType.ANY, new FidalApi.OnResult<List<Event>>() {
                     @Override

@@ -23,13 +23,20 @@ import okhttp3.ResponseBody;
 
 public class FidalApi {
     private static final HttpUrl CALENDAR_URL = HttpUrl.get("http://www.fidal.it/calendario.php");
+    private static FidalApi instance;
     private final OkHttpClient client;
     private final ExecutorService executorService = Executors.newCachedThreadPool();
     private final Handler handler;
 
-    public FidalApi() {
+    private FidalApi() {
         client = new OkHttpClient();
         handler = new Handler(Looper.getMainLooper());
+    }
+
+    @NonNull
+    public static FidalApi get() {
+        if (instance == null) instance = new FidalApi();
+        return instance;
     }
 
     public void getCalendar(int year, Month month, Level level, Region region, Type type, Category category,
