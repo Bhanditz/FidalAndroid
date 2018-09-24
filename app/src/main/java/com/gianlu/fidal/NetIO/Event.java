@@ -4,10 +4,14 @@ import android.support.annotation.NonNull;
 
 import org.jsoup.nodes.Element;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 public class Event {
     public final Date date;
     public final Level level;
     public final String name;
+    public final String desc;
     public final FidalApi.Type type;
     public final String place;
 
@@ -15,6 +19,7 @@ public class Event {
         this.date = new Date(year, row.child(1).child(0).text());
         this.level = Level.parse(row.child(2).child(0).text());
         this.name = row.child(3).child(0).text();
+        this.desc = row.child(3).child(2).text();
         this.type = parseType(row.child(4).text());
         this.place = row.child(5).text();
     }
@@ -75,7 +80,7 @@ public class Event {
         private final long start;
         private final long end;
 
-        public Date(int year, String text) {
+        private Date(int year, String text) {
             String[] split = text.split("/");
             int month = Integer.parseInt(split[1]);
 
@@ -87,6 +92,13 @@ public class Event {
                 int day = Integer.parseInt(split[0]);
                 start = end = 31556952000L * year + day * 86400000L + month * 2629746000L;
             }
+        }
+
+        @NonNull
+        public String toReadable() {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM", Locale.getDefault());
+            if (isSingleDay()) return sdf.format(start);
+            else return sdf.format(start) + " - " + sdf.format(end);
         }
 
         public boolean isSingleDay() {
