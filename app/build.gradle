@@ -31,5 +31,7 @@ android {
 }
 
 dependencies {
-    api project(':CommonUtils')
+    api(project(':CommonUtils')) {
+        exclude group: 'com.getkeepsafe.taptargetview'
+    }
 }
