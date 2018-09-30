@@ -4,6 +4,7 @@
     package="com.gianlu.fidal">
 
     <application
+        android:name=".ThisApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"

@@ -18,6 +18,71 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+        <org.apmem.tools.layouts.FlowLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:theme="@style/LabeledSpinnersInToolbar"
+            app:itemSpacing="4dp"
+            app:lineSpacing="4dp">
+
+            <com.gianlu.commonutils.Spinners.LabeledSpinner
+                android:id="@+id/main_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:labelText="@string/year" />
+
+            <com.gianlu.commonutils.Spinners.LabeledSpinner
+                android:id="@+id/main_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:labelText="@string/month" />
+
+            <com.gianlu.commonutils.Spinners.LabeledSpinner
+                android:id="@+id/main_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:labelText="@string/level" />
+
+            <com.gianlu.commonutils.Spinners.LabeledSpinner
+                android:id="@+id/main_region"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:labelText="@string/region" />
+
+            <com.gianlu.commonutils.Spinners.LabeledSpinner
+                android:id="@+id/main_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:labelText="@string/type" />
+
+            <com.gianlu.commonutils.Spinners.LabeledSpinner
+                android:id="@+id/main_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:labelText="@string/category" />
+
+            <CheckBox
+                android:id="@+id/main_federalChampionship"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="?android:attr/textColorPrimaryInverse"
+                android:text="@string/federalChampionship"
+                android:textColor="?android:attr/textColorPrimaryInverse" />
+
+            <com.gianlu.commonutils.Spinners.LabeledSpinner
+                android:id="@+id/main_approval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:labelText="@string/approval" />
+
+            <com.gianlu.commonutils.Spinners.LabeledSpinner
+                android:id="@+id/main_approvalType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:labelText="@string/approvalType" />
+        </org.apmem.tools.layouts.FlowLayout>
+
     </android.support.design.widget.AppBarLayout>
 
     <com.gianlu.commonutils.RecyclerViewLayout

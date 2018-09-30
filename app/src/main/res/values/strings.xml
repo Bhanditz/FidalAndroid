@@ -5,4 +5,71 @@
     <string name="eventPlace"><![CDATA[<b>Place</b>]]>: %s</string>
     <string name="eventLevel"><![CDATA[<b>Level</b>]]>: %s</string>
     <string name="eventDate"><![CDATA[<b>Date</b>]]>: %s</string>
+    <string name="year">Year</string>
+    <string name="month">Month</string>
+    <string name="level">Level</string>
+    <string name="month_january">January</string>
+    <string name="month_august">August</string>
+    <string name="month_september">September</string>
+    <string name="month_october">October</string>
+    <string name="month_november">November</string>
+    <string name="month_december">December</string>
+    <string name="month_february">February</string>
+    <string name="month_march">March</string>
+    <string name="month_april">April</string>
+    <string name="month_may">May</string>
+    <string name="month_june">June</string>
+    <string name="month_july">July</string>
+    <string name="level_national">National</string>
+    <string name="level_regional">Regional</string>
+    <string name="any">Any</string>
+    <string name="type">Type</string>
+    <string name="region">Region</string>
+    <string name="category">Category</string>
+    <string name="category_eso">Newcomers</string>
+    <string name="category_rag">Kids</string>
+    <string name="category_cad">Cadets</string>
+    <string name="category_all">Pupils</string>
+    <string name="category_jun">Juniors</string>
+    <string name="category_pro">Promises</string>
+    <string name="category_sen">Seniors</string>
+    <string name="category_mas">Master</string>
+    <string name="type_cross">Cross</string>
+    <string name="type_indoor">Indoor</string>
+    <string name="type_marciaStrada">March/Road</string>
+    <string name="type_montagna">Mountain</string>
+    <string name="type_montagnaTrail">Mountain/Trail</string>
+    <string name="type_nordicWalking">Nordic walking</string>
+    <string name="type_outdoor">Outdoor</string>
+    <string name="type_piazzaAltro">Square and more</string>
+    <string name="type_strada">Road</string>
+    <string name="type_trail">Trail</string>
+    <string name="type_ultramaratona">Ultramarathon</string>
+    <string name="type_ultramaratonaTrail">Ultramarathon/Trail</string>
+    <string name="region_abruzzo" translatable="false">Abruzzo</string>
+    <string name="region_alto_adige" translatable="false">Alto adige</string>
+    <string name="region_basilicata" translatable="false">Basilicata</string>
+    <string name="region_calabria" translatable="false">Calabria</string>
+    <string name="region_campania" translatable="false">Campania</string>
+    <string name="region_emilia_romagna" translatable="false">Emilia Romagna</string>
+    <string name="region_friuli_venezia_giulia" translatable="false">Fiuli Venezia Giulia</string>
+    <string name="region_lazio" translatable="false">Lazio</string>
+    <string name="region_liguria" translatable="false">Liguria</string>
+    <string name="region_lombardia" translatable="false">Lombardia</string>
+    <string name="region_marche" translatable="false">March</string>
+    <string name="region_molise" translatable="false">Molise</string>
+    <string name="region_piemonte" translatable="false">Piemonte</string>
+    <string name="region_puglia" translatable="false">Puglia</string>
+    <string name="region_sardegna" translatable="false">Sardegna</string>
+    <string name="region_sicilia" translatable="false">Sicilia</string>
+    <string name="region_toscana" translatable="false">Toscana</string>
+    <string name="region_trentino" translatable="false">Trentino</string>
+    <string name="region_umbria" translatable="false">Umbria</string>
+    <string name="region_valledaosta" translatable="false">Valledaosta</string>
+    <string name="region_veneto" translatable="false">Veneto</string>
+    <string name="federalChampionship">Federal championship</string>
+    <string name="approvalType">Approval type</string>
+    <string name="approval">Approval</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

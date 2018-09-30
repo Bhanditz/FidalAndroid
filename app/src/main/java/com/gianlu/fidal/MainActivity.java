@@ -7,8 +7,10 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.CheckBox;
 
 import com.gianlu.commonutils.RecyclerViewLayout;
+import com.gianlu.commonutils.Spinners.LabeledSpinner;
 import com.gianlu.commonutils.Toaster;
 import com.gianlu.fidal.Adapters.EventsAdapter;
 import com.gianlu.fidal.NetIO.Event;
@@ -27,6 +29,30 @@ public class MainActivity extends AppCompatActivity implements FidalApi.OnResult
 
         Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
+
+        LabeledSpinner year = findViewById(R.id.main_year);
+        year.setNumberItems(FidalApi.yearsRange());
+        year.setOnItemSelectedListener(new LabeledSpinner.SelectListener<Integer>() {
+            @Override
+            public void selected(@NonNull Integer year) {
+                System.out.println(year);
+            }
+        });
+        LabeledSpinner month = findViewById(R.id.main_month);
+        month.setItems(FidalApi.Month.list());
+        LabeledSpinner level = findViewById(R.id.main_level);
+        level.setItems(FidalApi.Level.list());
+        LabeledSpinner region = findViewById(R.id.main_region);
+        region.setItems(FidalApi.Region.list());
+        LabeledSpinner type = findViewById(R.id.main_type);
+        type.setItems(FidalApi.Type.list());
+        LabeledSpinner category = findViewById(R.id.main_category);
+        category.setItems(FidalApi.Category.list());
+        CheckBox federalChampionship = findViewById(R.id.main_federalChampionship);
+        LabeledSpinner approval = findViewById(R.id.main_approval);
+        approval.setItems(FidalApi.Approval.list());
+        LabeledSpinner approvalType = findViewById(R.id.main_approvalType);
+        approvalType.setItems(FidalApi.ApprovalType.list());
 
         layout = findViewById(R.id.main_layout);
         layout.disableSwipeRefresh();

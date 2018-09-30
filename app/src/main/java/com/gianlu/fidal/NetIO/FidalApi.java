@@ -1,10 +1,14 @@
 package com.gianlu.fidal.NetIO;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
+
+import com.gianlu.commonutils.Spinners.LabeledSpinner;
+import com.gianlu.fidal.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,6 +17,8 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -39,6 +45,16 @@ public class FidalApi {
     public static FidalApi get() {
         if (instance == null) instance = new FidalApi();
         return instance;
+    }
+
+    @NonNull
+    public static List<Integer> yearsRange() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+
+        List<Integer> list = new ArrayList<>((year - 2002) + 1);
+        for (int i = year; i > 2002; i--) list.add(i);
+        return list;
     }
 
     public void getCalendar(int year, Month month, Level level, Region region, Type type, Category category,
@@ -70,129 +86,309 @@ public class FidalApi {
         }
     }
 
-    public enum Approval {
-        ANY(""),
-        YES("si"),
-        NO("no");
+    public enum Approval implements LabeledSpinner.GetText {
+        ANY(""), YES("si"), NO("no");
 
         private final String val;
 
         Approval(String val) {
             this.val = val;
         }
+
+        @NonNull
+        public static List<Approval> list() {
+            return Arrays.asList(values());
+        }
+
+        @NonNull
+        @Override
+        public String getText(@NonNull Context context) {
+            switch (this) {
+                case ANY:
+                    return context.getString(R.string.any);
+                case YES:
+                    return context.getString(R.string.yes);
+                case NO:
+                    return context.getString(R.string.no);
+                default:
+                    throw new IllegalArgumentException("Unknown approval: " + this);
+            }
+        }
     }
 
-    public enum ApprovalType {
-        ANY(""),
-        A("a"),
-        B("b");
+    public enum ApprovalType implements LabeledSpinner.GetText {
+        ANY(""), A("a"), B("b");
 
         private final String val;
 
         ApprovalType(String val) {
             this.val = val;
         }
+
+        @NonNull
+        public static List<ApprovalType> list() {
+            return Arrays.asList(values());
+        }
+
+        @NonNull
+        @Override
+        public String getText(@NonNull Context context) {
+            switch (this) {
+                case ANY:
+                    return context.getString(R.string.any);
+                case A:
+                    return "A";
+                case B:
+                    return "B";
+                default:
+                    throw new IllegalArgumentException("Unknown approval type: " + this);
+            }
+        }
     }
 
-    public enum Month {
-        JANUARY,
-        FEBRUARY,
-        MARCH,
-        APRIL,
-        MAY,
-        JUNE,
-        JULY,
-        AUGUST,
-        SEPTEMBER,
-        OCTOBER,
-        NOVEMBER,
-        DECEMBER;
+    public enum Month implements LabeledSpinner.GetText {
+        JANUARY, FEBRUARY, MARCH, APRIL,
+        MAY, JUNE, JULY, AUGUST,
+        SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER;
+
+        @NonNull
+        public static List<Month> list() {
+            return Arrays.asList(values());
+        }
 
         private int val() {
             return ordinal() + 1;
         }
+
+        @NonNull
+        @Override
+        public String getText(@NonNull Context context) {
+            switch (this) {
+                case JANUARY:
+                    return context.getString(R.string.month_january);
+                case FEBRUARY:
+                    return context.getString(R.string.month_february);
+                case MARCH:
+                    return context.getString(R.string.month_march);
+                case APRIL:
+                    return context.getString(R.string.month_april);
+                case MAY:
+                    return context.getString(R.string.month_may);
+                case JUNE:
+                    return context.getString(R.string.month_june);
+                case JULY:
+                    return context.getString(R.string.month_july);
+                case AUGUST:
+                    return context.getString(R.string.month_august);
+                case SEPTEMBER:
+                    return context.getString(R.string.month_september);
+                case OCTOBER:
+                    return context.getString(R.string.month_october);
+                case NOVEMBER:
+                    return context.getString(R.string.month_november);
+                case DECEMBER:
+                    return context.getString(R.string.month_december);
+                default:
+                    throw new IllegalArgumentException("Unknown month: " + this);
+            }
+        }
     }
 
-    public enum Level {
-        ANY(""),
-        NATIONAL("COD"),
-        REGIONAL("REG");
+    public enum Level implements LabeledSpinner.GetText {
+        ANY(""), NATIONAL("COD"), REGIONAL("REG");
 
         private final String val;
 
         Level(String val) {
             this.val = val;
         }
+
+        @NonNull
+        public static List<Level> list() {
+            return Arrays.asList(values());
+        }
+
+        @NonNull
+        @Override
+        public String getText(@NonNull Context context) {
+            switch (this) {
+                case ANY:
+                    return context.getString(R.string.any);
+                case NATIONAL:
+                    return context.getString(R.string.level_national);
+                case REGIONAL:
+                    return context.getString(R.string.level_regional);
+                default:
+                    throw new IllegalArgumentException("Unknown level: " + this);
+            }
+        }
     }
 
-    public enum Region {
-        ANY(""),
-        ABRUZZO("ABRUZZO"),
-        ALTO_ADIGE("ALTOADIGE"),
-        BASILICATA("BASILICATA"),
-        CALABRIA("CALABRIA"),
-        CAMPANIA("CAMPANIA"),
-        EMILIA_ROMAGNA("EMILIAROMAGNA"),
-        FRIULI_VENEZIA_GIULIA("FRIULIVENEZIAGIULIA"),
-        LAZIO("LAZIO"),
-        LIGURIA("LIGURIA"),
-        LOMBARDIA("LOMBARDIA"),
-        MARCHE("MARCHE"),
-        MOLISE("MOLISE"),
-        PIEMONTE("PIEMONTE"),
-        PUGLIA("PUGLIA"),
-        SARDEGNA("SARDEGNA"),
-        SICILIA("SICILIA"),
-        TOSCANA("TOSCANA"),
-        TRENTINO("TRENTINO"),
-        UMBRIA("UMBRIA"),
-        VALLEDAOSTA("VALLEDAOSTA"),
-        VENETO("VENETO");
+    public enum Region implements LabeledSpinner.GetText {
+        ANY(""), ABRUZZO("ABRUZZO"), ALTO_ADIGE("ALTOADIGE"), BASILICATA("BASILICATA"),
+        CALABRIA("CALABRIA"), CAMPANIA("CAMPANIA"), EMILIA_ROMAGNA("EMILIAROMAGNA"),
+        FRIULI_VENEZIA_GIULIA("FRIULIVENEZIAGIULIA"), LAZIO("LAZIO"), LIGURIA("LIGURIA"),
+        LOMBARDIA("LOMBARDIA"), MARCHE("MARCHE"), MOLISE("MOLISE"), PIEMONTE("PIEMONTE"),
+        PUGLIA("PUGLIA"), SARDEGNA("SARDEGNA"), SICILIA("SICILIA"), TOSCANA("TOSCANA"),
+        TRENTINO("TRENTINO"), UMBRIA("UMBRIA"), VALLEDAOSTA("VALLEDAOSTA"), VENETO("VENETO");
 
         public final String val;
 
         Region(String val) {
             this.val = val;
         }
+
+        @NonNull
+        public static List<Region> list() {
+            return Arrays.asList(values());
+        }
+
+        @NonNull
+        @Override
+        public String getText(@NonNull Context context) {
+            switch (this) {
+                case ANY:
+                    return context.getString(R.string.any);
+                case ABRUZZO:
+                    return context.getString(R.string.region_abruzzo);
+                case ALTO_ADIGE:
+                    return context.getString(R.string.region_alto_adige);
+                case BASILICATA:
+                    return context.getString(R.string.region_basilicata);
+                case CALABRIA:
+                    return context.getString(R.string.region_calabria);
+                case CAMPANIA:
+                    return context.getString(R.string.region_campania);
+                case EMILIA_ROMAGNA:
+                    return context.getString(R.string.region_emilia_romagna);
+                case FRIULI_VENEZIA_GIULIA:
+                    return context.getString(R.string.region_friuli_venezia_giulia);
+                case LAZIO:
+                    return context.getString(R.string.region_lazio);
+                case LIGURIA:
+                    return context.getString(R.string.region_liguria);
+                case LOMBARDIA:
+                    return context.getString(R.string.region_lombardia);
+                case MARCHE:
+                    return context.getString(R.string.region_marche);
+                case MOLISE:
+                    return context.getString(R.string.region_molise);
+                case PIEMONTE:
+                    return context.getString(R.string.region_piemonte);
+                case PUGLIA:
+                    return context.getString(R.string.region_puglia);
+                case SARDEGNA:
+                    return context.getString(R.string.region_sardegna);
+                case SICILIA:
+                    return context.getString(R.string.region_sicilia);
+                case TOSCANA:
+                    return context.getString(R.string.region_toscana);
+                case TRENTINO:
+                    return context.getString(R.string.region_trentino);
+                case UMBRIA:
+                    return context.getString(R.string.region_umbria);
+                case VALLEDAOSTA:
+                    return context.getString(R.string.region_valledaosta);
+                case VENETO:
+                    return context.getString(R.string.region_veneto);
+                default:
+                    throw new IllegalArgumentException("Unknown region: " + this);
+            }
+        }
     }
 
-    public enum Type {
-        ANY(0),
-        CROSS(2),
-        INDOR(3),
-        MARCIA_STRADA(8),
-        MONTAGNA(11),
-        MONTAGNA_TRAIL(4),
-        NORDIC_WALKING(13),
-        OUTDOOR(5),
-        PIAZZA_ALTRO(10),
-        STRADA(6),
-        TRAIL(12),
-        ULTRAMARATONA(7),
-        ULTRAMARATONA_TRAIL(9);
+    public enum Type implements LabeledSpinner.GetText {
+        ANY(0), CROSS(2), INDOR(3), MARCIA_STRADA(8), MONTAGNA(11),
+        MONTAGNA_TRAIL(4), NORDIC_WALKING(13), OUTDOOR(5), PIAZZA_ALTRO(10), STRADA(6),
+        TRAIL(12), ULTRAMARATONA(7), ULTRAMARATONA_TRAIL(9);
 
         public final int val;
 
         Type(int val) {
             this.val = val;
         }
+
+        @NonNull
+        public static List<Type> list() {
+            return Arrays.asList(values());
+        }
+
+        @NonNull
+        @Override
+        public String getText(@NonNull Context context) {
+            switch (this) {
+                case ANY:
+                    return context.getString(R.string.any);
+                case CROSS:
+                    return context.getString(R.string.type_cross);
+                case INDOR:
+                    return context.getString(R.string.type_indoor);
+                case MARCIA_STRADA:
+                    return context.getString(R.string.type_marciaStrada);
+                case MONTAGNA:
+                    return context.getString(R.string.type_montagna);
+                case MONTAGNA_TRAIL:
+                    return context.getString(R.string.type_montagnaTrail);
+                case NORDIC_WALKING:
+                    return context.getString(R.string.type_nordicWalking);
+                case OUTDOOR:
+                    return context.getString(R.string.type_outdoor);
+                case PIAZZA_ALTRO:
+                    return context.getString(R.string.type_piazzaAltro);
+                case STRADA:
+                    return context.getString(R.string.type_strada);
+                case TRAIL:
+                    return context.getString(R.string.type_trail);
+                case ULTRAMARATONA:
+                    return context.getString(R.string.type_ultramaratona);
+                case ULTRAMARATONA_TRAIL:
+                    return context.getString(R.string.type_ultramaratonaTrail);
+                default:
+                    throw new IllegalArgumentException("Unknown type: " + this);
+            }
+        }
     }
 
-    public enum Category {
-        ANY(""),
-        ESORDIENTI("ESO"),
-        RAGAZZI("RAG"),
-        CADETTI("CAD"),
-        ALLIEVI("ALL"),
-        JUNIORES("JUN"),
-        PROMESSE("PRO"),
-        SENIORES("SEN"),
-        MASTER("MAS");
+    public enum Category implements LabeledSpinner.GetText {
+        ANY(""), ESORDIENTI("ESO"), RAGAZZI("RAG"), CADETTI("CAD"), ALLIEVI("ALL"),
+        JUNIORES("JUN"), PROMESSE("PRO"), SENIORES("SEN"), MASTER("MAS");
 
         public final String val;
 
         Category(String val) {
             this.val = val;
+        }
+
+        @NonNull
+        public static List<Category> list() {
+            return Arrays.asList(values());
+        }
+
+        @NonNull
+        @Override
+        public String getText(@NonNull Context context) {
+            switch (this) {
+                case ANY:
+                    return context.getString(R.string.any);
+                case ESORDIENTI:
+                    return context.getString(R.string.category_eso);
+                case RAGAZZI:
+                    return context.getString(R.string.category_rag);
+                case CADETTI:
+                    return context.getString(R.string.category_cad);
+                case ALLIEVI:
+                    return context.getString(R.string.category_all);
+                case JUNIORES:
+                    return context.getString(R.string.category_jun);
+                case PROMESSE:
+                    return context.getString(R.string.category_pro);
+                case SENIORES:
+                    return context.getString(R.string.category_sen);
+                case MASTER:
+                    return context.getString(R.string.category_mas);
+                default:
+                    throw new IllegalArgumentException("Unknown category: " + this);
+            }
         }
     }
 
