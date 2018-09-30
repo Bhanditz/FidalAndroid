@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 
 import com.gianlu.commonutils.RecyclerViewLayout;
 import com.gianlu.commonutils.Toaster;
@@ -14,6 +16,7 @@ import com.gianlu.fidal.NetIO.FidalApi;
 
 import java.util.List;
 
+
 public class MainActivity extends AppCompatActivity implements FidalApi.OnResult<List<Event>> {
     private RecyclerViewLayout layout;
 
@@ -22,11 +25,13 @@ public class MainActivity extends AppCompatActivity implements FidalApi.OnResult
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
 
         layout = findViewById(R.id.main_layout);
         layout.disableSwipeRefresh();
         layout.getList().addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        layout.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        layout.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
         layout.startLoading();
 

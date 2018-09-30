@@ -23,7 +23,6 @@ android {
         foss {
             dimension 'main'
         }
-
         standard {
             dimension 'main'
         }

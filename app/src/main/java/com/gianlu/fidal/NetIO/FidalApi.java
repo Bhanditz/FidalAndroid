@@ -3,6 +3,8 @@ package com.gianlu.fidal.NetIO;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.annotation.UiThread;
+import android.support.annotation.WorkerThread;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -196,9 +198,11 @@ public class FidalApi {
 
     private interface Processor<A> {
         @NonNull
+        @WorkerThread
         A process(@NonNull Document document) throws ParseException;
     }
 
+    @UiThread
     public interface OnResult<A> {
         void result(@NonNull A result);
 

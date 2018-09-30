@@ -14,11 +14,13 @@ public class Event {
     public final String desc;
     public final FidalApi.Type type;
     public final String place;
+    private final String url;
 
     public Event(int year, @NonNull Element row) throws FidalApi.ParseException {
         this.date = new Date(year, row.child(1).child(0).text());
         this.level = Level.parse(row.child(2).child(0).text());
         this.name = row.child(3).child(0).text();
+        this.url = row.child(3).child(0).attr("href");
         this.desc = row.child(3).child(2).text();
         this.type = parseType(row.child(4).text());
         this.place = row.child(5).text();
