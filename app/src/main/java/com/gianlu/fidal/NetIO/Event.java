@@ -42,11 +42,13 @@ public class Event {
             case "PIAZZA e altri ambiti":
                 return FidalApi.Type.PIAZZA_ALTRO;
             case "INDOOR":
-                return FidalApi.Type.INDOR;
+                return FidalApi.Type.INDOOR;
             case "NORDIC WALKING":
                 return FidalApi.Type.NORDIC_WALKING;
             case "CROSS":
                 return FidalApi.Type.CROSS;
+            case "MARCIA SU STRADA":
+                return FidalApi.Type.MARCIA_STRADA;
             default:
                 throw new FidalApi.ParseException("Unknown type: " + text);
         }

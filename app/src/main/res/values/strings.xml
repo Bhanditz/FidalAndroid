@@ -72,4 +72,5 @@
     <string name="approval">Approval</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="type_track">Track</string>
 </resources>

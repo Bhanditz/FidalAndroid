@@ -156,6 +156,11 @@ public class FidalApi {
             return Arrays.asList(values());
         }
 
+        @NonNull
+        public static Month now() {
+            return values()[Calendar.getInstance().get(Calendar.MONTH)];
+        }
+
         private int val() {
             return ordinal() + 1;
         }
@@ -298,9 +303,9 @@ public class FidalApi {
     }
 
     public enum Type implements LabeledSpinner.GetText {
-        ANY(0), CROSS(2), INDOR(3), MARCIA_STRADA(8), MONTAGNA(11),
+        ANY(0), CROSS(2), INDOOR(3), PISTA_REGIONAL(5), MARCIA_STRADA(8), MONTAGNA(11),
         MONTAGNA_TRAIL(4), NORDIC_WALKING(13), OUTDOOR(5), PIAZZA_ALTRO(10), STRADA(6),
-        TRAIL(12), ULTRAMARATONA(7), ULTRAMARATONA_TRAIL(9);
+        TRAIL(12), ULTRAMARATONA(7), ULTRAMARATONA_TRAIL(9), MONTAGNA_REGIONAL(4), TRAIL_REGIONAL(7),;
 
         public final int val;
 
@@ -309,8 +314,18 @@ public class FidalApi {
         }
 
         @NonNull
-        public static List<Type> list() {
-            return Arrays.asList(values());
+        public static List<Type> list(@NonNull Level level) {
+            if (level == Level.REGIONAL) {
+                return Arrays.asList(ANY, CROSS, INDOOR, MONTAGNA_REGIONAL, PISTA_REGIONAL, STRADA, TRAIL_REGIONAL);
+            } else {
+                return Arrays.asList(ANY, CROSS, INDOOR, MARCIA_STRADA, MONTAGNA, MONTAGNA_TRAIL, NORDIC_WALKING,
+                        OUTDOOR, PISTA_REGIONAL, STRADA, TRAIL, ULTRAMARATONA, ULTRAMARATONA_TRAIL);
+            }
+        }
+
+        public boolean hasApproval() {
+            return this == CROSS || this == MONTAGNA_REGIONAL || this == STRADA ||
+                    this == TRAIL_REGIONAL || this == MARCIA_STRADA || this == ULTRAMARATONA_TRAIL;
         }
 
         @NonNull
@@ -321,11 +336,14 @@ public class FidalApi {
                     return context.getString(R.string.any);
                 case CROSS:
                     return context.getString(R.string.type_cross);
-                case INDOR:
+                case INDOOR:
                     return context.getString(R.string.type_indoor);
+                case PISTA_REGIONAL:
+                    return context.getString(R.string.type_track);
                 case MARCIA_STRADA:
                     return context.getString(R.string.type_marciaStrada);
                 case MONTAGNA:
+                case MONTAGNA_REGIONAL:
                     return context.getString(R.string.type_montagna);
                 case MONTAGNA_TRAIL:
                     return context.getString(R.string.type_montagnaTrail);
@@ -337,6 +355,7 @@ public class FidalApi {
                     return context.getString(R.string.type_piazzaAltro);
                 case STRADA:
                     return context.getString(R.string.type_strada);
+                case TRAIL_REGIONAL:
                 case TRAIL:
                     return context.getString(R.string.type_trail);
                 case ULTRAMARATONA:
