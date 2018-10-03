@@ -52,4 +52,6 @@
     <string name="yes">Sì</string>
     <string name="no">No</string>
     <string name="type_track">Pista</string>
+    <string name="failedLoading_reason">Caricamento fallito: %s</string>
+    <string name="noEventsFound">Non sono disponibili manifestazioni con i filtri selezionati.</string>
 </resources>

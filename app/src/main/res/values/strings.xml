@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">FIDAL</string>
     <string name="failedLoading">Failed loading!</string>
+    <string name="failedLoading_reason">Failed loading: %s</string>
     <string name="eventType"><![CDATA[<b>Type</b>]]>: %s</string>
     <string name="eventPlace"><![CDATA[<b>Place</b>]]>: %s</string>
     <string name="eventLevel"><![CDATA[<b>Level</b>]]>: %s</string>
@@ -73,4 +74,5 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="type_track">Track</string>
+    <string name="noEventsFound">No events have been found!</string>
 </resources>

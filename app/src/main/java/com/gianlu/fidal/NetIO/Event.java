@@ -47,6 +47,8 @@ public class Event {
                 return FidalApi.Type.NORDIC_WALKING;
             case "CROSS":
                 return FidalApi.Type.CROSS;
+            case "MONTAGNA/TRAIL":
+                return FidalApi.Type.MONTAGNA_TRAIL;
             case "MARCIA SU STRADA":
                 return FidalApi.Type.MARCIA_STRADA;
             default:
@@ -55,11 +57,9 @@ public class Event {
     }
 
     public enum Level {
-        INTERNAZIONALE,
-        GOLD,
-        SILVER,
-        BRONZE,
-        NAZIONALE;
+        INTERNAZIONALE, GOLD, SILVER,
+        BRONZE, NAZIONALE, PROVINCIALE,
+        REGIONALE_OPEN;
 
         @NonNull
         private static Level parse(@NonNull String text) throws FidalApi.ParseException {
@@ -74,6 +74,10 @@ public class Event {
                     return BRONZE;
                 case "N":
                     return NAZIONALE;
+                case "P":
+                    return PROVINCIALE;
+                case "R":
+                    return REGIONALE_OPEN;
                 default:
                     throw new FidalApi.ParseException("Unknown level: " + text);
             }

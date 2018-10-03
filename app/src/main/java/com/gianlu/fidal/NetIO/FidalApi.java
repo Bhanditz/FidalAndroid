@@ -60,9 +60,10 @@ public class FidalApi {
     public void getCalendar(int year, Month month, Level level, Region region, Type type, Category category,
                             boolean federal, Approval approval, ApprovalType approvalType, OnResult<List<Event>> listener) {
         HttpUrl.Builder url = CALENDAR_URL.newBuilder();
-        url.addQueryParameter("year", String.valueOf(year));
-        url.addQueryParameter("month", String.valueOf(month.val()));
-        url.addQueryParameter("livello", level.val);
+        url.addQueryParameter("submit", "Invia");
+        url.addQueryParameter("anno", String.valueOf(year));
+        url.addQueryParameter("mese", String.valueOf(month.val()));
+        url.addQueryParameter("livello", region != Region.ANY ? Level.ANY.val : level.val);
         url.addQueryParameter("new_regione", region.val);
         url.addQueryParameter("new_tipo", String.valueOf(type.val));
         url.addQueryParameter("new_categoria", category.val);
@@ -436,7 +437,16 @@ public class FidalApi {
         public List<Event> process(@NonNull Document document) throws ParseException {
             List<Event> events = new ArrayList<>();
             Elements rows = document.selectFirst("#content .table_btm table tbody").children();
-            for (Element row : rows) events.add(new Event(year, row));
+
+            boolean first = true;
+            for (Element row : rows) {
+                if (first && row.text().contains("Non sono disponibili manifestazioni con i filtri selezionati"))
+                    break;
+
+                events.add(new Event(year, row));
+                first = false;
+            }
+
             return events;
         }
     }
