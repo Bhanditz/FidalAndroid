@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gianlu.commonutils.SuperTextView;
-import com.gianlu.fidal.NetIO.Event;
+import com.gianlu.fidal.NetIO.Models.Event;
 import com.gianlu.fidal.R;
 
 import java.util.List;

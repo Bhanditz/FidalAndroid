@@ -15,8 +15,8 @@ import android.widget.CompoundButton;
 import com.gianlu.commonutils.RecyclerViewLayout;
 import com.gianlu.commonutils.Spinners.LabeledSpinner;
 import com.gianlu.fidal.Adapters.EventsAdapter;
-import com.gianlu.fidal.NetIO.Event;
 import com.gianlu.fidal.NetIO.FidalApi;
+import com.gianlu.fidal.NetIO.Models.Event;
 
 import java.util.Calendar;
 import java.util.List;
@@ -62,12 +62,8 @@ public class MainActivity extends AppCompatActivity implements FidalApi.OnResult
             @Override
             public void selected(@NonNull FidalApi.Level item) {
                 type.setItems(FidalApi.Type.list(item), FidalApi.Type.ANY);
-
-                if (item == FidalApi.Level.REGIONAL) {
-                    region.setVisibility(View.VISIBLE);
-                } else {
-                    region.setVisibility(View.GONE);
-                }
+                if (item == FidalApi.Level.REGIONAL) region.setVisibility(View.VISIBLE);
+                else region.setVisibility(View.GONE);
             }
         }));
         level.setItems(FidalApi.Level.list(), FidalApi.Level.ANY);

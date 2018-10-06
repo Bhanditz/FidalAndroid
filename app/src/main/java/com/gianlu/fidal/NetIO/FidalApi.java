@@ -7,7 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
 
+import com.gianlu.commonutils.Logging;
 import com.gianlu.commonutils.Spinners.LabeledSpinner;
+import com.gianlu.fidal.NetIO.Models.Event;
+import com.gianlu.fidal.NetIO.Models.EventDetails;
 import com.gianlu.fidal.R;
 
 import org.jsoup.Jsoup;
@@ -43,9 +46,12 @@ public class FidalApi {
     private final OkHttpClient client;
     private final ExecutorService executorService = Executors.newCachedThreadPool();
     private final Handler handler;
+    private Requester<?> currentGetCalendarTask = null;
 
     private FidalApi() {
-        client = new OkHttpClient();
+        client = new OkHttpClient.Builder()
+                .followRedirects(false)
+                .build();
         handler = new Handler(Looper.getMainLooper());
     }
 
@@ -65,6 +71,9 @@ public class FidalApi {
         return list;
     }
 
+    /**
+     * Only one request at a time is allowed for this method.
+     */
     public void getCalendar(int year, Month month, Level level, Region region, Type type, Category category,
                             boolean federal, Approval approval, ApprovalType approvalType, OnResult<List<Event>> listener) {
         HttpUrl.Builder url = CALENDAR_URL.newBuilder();
@@ -78,20 +87,23 @@ public class FidalApi {
         url.addQueryParameter("new_campionati", String.valueOf(federal ? 1 : 0));
         url.addQueryParameter("omologazione", approval.val);
         url.addQueryParameter("omologazione_tipo", approvalType.val);
-        executorService.execute(new Requester<>(url.build(), new EventsProcessor(year), listener));
+
+        if (currentGetCalendarTask != null) currentGetCalendarTask.abort();
+        currentGetCalendarTask = new Requester<>(url.build(), new EventsProcessor(year), listener);
+        executorService.execute(currentGetCalendarTask);
     }
 
     @NonNull
     private Document requestSync(@NonNull HttpUrl url) throws IOException {
         try (Response resp = client.newCall(new Request.Builder().url(url).get().build()).execute()) {
-            if (resp.code() == 200) {
-                ResponseBody body = resp.body();
-                if (body == null)
-                    throw new IOException(new NullPointerException("Request body is empty!"));
-                return Jsoup.parse(body.string());
-            } else {
+            if (resp.code() != 200)
                 throw new IOException(String.format("%d: %s", resp.code(), resp.message()));
-            }
+
+            ResponseBody body = resp.body();
+            if (body == null)
+                throw new IOException(new NullPointerException("Request body is empty!"));
+
+            return Jsoup.parse(body.string());
         }
     }
 
@@ -336,6 +348,36 @@ public class FidalApi {
             }
         }
 
+        @NonNull
+        public static FidalApi.Type parseType(@NonNull String text) throws FidalApi.ParseException {
+            switch (text) {
+                case "OUTDOOR":
+                    return FidalApi.Type.OUTDOOR;
+                case "STRADA":
+                    return FidalApi.Type.STRADA;
+                case "MONTAGNA":
+                    return FidalApi.Type.MONTAGNA;
+                case "ULTRAMARATONA":
+                    return FidalApi.Type.ULTRAMARATONA;
+                case "TRAIL":
+                    return FidalApi.Type.TRAIL;
+                case "PIAZZA e altri ambiti":
+                    return FidalApi.Type.PIAZZA_ALTRO;
+                case "INDOOR":
+                    return FidalApi.Type.INDOOR;
+                case "NORDIC WALKING":
+                    return FidalApi.Type.NORDIC_WALKING;
+                case "CROSS":
+                    return FidalApi.Type.CROSS;
+                case "MONTAGNA/TRAIL":
+                    return FidalApi.Type.MONTAGNA_TRAIL;
+                case "MARCIA SU STRADA":
+                    return FidalApi.Type.MARCIA_STRADA;
+                default:
+                    throw new FidalApi.ParseException("Unknown type: " + text);
+            }
+        }
+
         public boolean hasApproval() {
             return this == CROSS || this == MONTAGNA_REGIONAL || this == STRADA ||
                     this == TRAIL_REGIONAL || this == MARCIA_STRADA || this == ULTRAMARATONA_TRAIL;
@@ -394,6 +436,14 @@ public class FidalApi {
         @NonNull
         public static List<Category> list() {
             return Arrays.asList(values());
+        }
+
+        @NonNull
+        public static Category parseCategory(@NonNull String val) throws ParseException {
+            for (Category cat : values())
+                if (cat.val.equals(val)) return cat;
+
+            throw new ParseException("Unknown category: " + val);
         }
 
         @NonNull
@@ -459,7 +509,8 @@ public class FidalApi {
 
                 try {
                     events.add(new Event(year, row));
-                } catch (ParseException ignored) {
+                } catch (ParseException ex) {
+                    Logging.log(ex);
                 }
             }
 
@@ -471,12 +522,17 @@ public class FidalApi {
         public ParseException(String message) {
             super(message);
         }
+
+        public ParseException(Throwable ex) {
+            super(ex);
+        }
     }
 
     private class Requester<A> implements Runnable {
         private final HttpUrl url;
         private final Processor<A> processor;
         private final OnResult<A> listener;
+        private volatile boolean aborted = false;
 
         private Requester(HttpUrl url, Processor<A> processor, OnResult<A> listener) {
             this.url = url;
@@ -484,24 +540,34 @@ public class FidalApi {
             this.listener = listener;
         }
 
+        private void abort() {
+            aborted = true;
+        }
+
         @Override
         public void run() {
+            if (aborted) return;
+
             try {
                 Document document = requestSync(url);
-                final A result = processor.process(document);
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        listener.result(result);
-                    }
-                });
+                if (!aborted) {
+                    final A result = processor.process(document);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.result(result);
+                        }
+                    });
+                }
             } catch (IOException | ParseException ex) {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        listener.exception(ex);
-                    }
-                });
+                if (!aborted) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.exception(ex);
+                        }
+                    });
+                }
             }
         }
     }

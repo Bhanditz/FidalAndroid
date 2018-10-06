@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import com.gianlu.commonutils.BottomSheet.BaseModalBottomSheet;
 import com.gianlu.commonutils.Dialogs.DialogUtils;
 import com.gianlu.commonutils.Toaster;
-import com.gianlu.fidal.NetIO.Event;
-import com.gianlu.fidal.NetIO.EventDetails;
 import com.gianlu.fidal.NetIO.FidalApi;
+import com.gianlu.fidal.NetIO.Models.Event;
+import com.gianlu.fidal.NetIO.Models.EventDetails;
 
 public class EventBottomSheet extends BaseModalBottomSheet<Event, EventDetails> {
 
