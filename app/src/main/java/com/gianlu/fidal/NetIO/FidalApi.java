@@ -31,6 +31,14 @@ import okhttp3.ResponseBody;
 
 public class FidalApi {
     private static final HttpUrl CALENDAR_URL = HttpUrl.get("http://www.fidal.it/calendario.php");
+    private static final Processor<EventDetails> EVENT_DETAILS_PROCESSOR = new Processor<EventDetails>() {
+        @NonNull
+        @Override
+        public EventDetails process(@NonNull Document document) throws ParseException {
+            Element element = document.selectFirst("#content .section .text-holder");
+            return new EventDetails(element);
+        }
+    };
     private static FidalApi instance;
     private final OkHttpClient client;
     private final ExecutorService executorService = Executors.newCachedThreadPool();
@@ -85,6 +93,10 @@ public class FidalApi {
                 throw new IOException(String.format("%d: %s", resp.code(), resp.message()));
             }
         }
+    }
+
+    public void getEvent(@NonNull Event payload, OnResult<EventDetails> listener) {
+        executorService.execute(new Requester<>(HttpUrl.get(payload.url), EVENT_DETAILS_PROCESSOR, listener));
     }
 
     public enum Approval implements LabeledSpinner.GetText {
@@ -434,7 +446,7 @@ public class FidalApi {
 
         @NonNull
         @Override
-        public List<Event> process(@NonNull Document document) throws ParseException {
+        public List<Event> process(@NonNull Document document) {
             List<Event> events = new ArrayList<>();
             Elements rows = document.selectFirst("#content .table_btm table tbody").children();
 
@@ -443,8 +455,12 @@ public class FidalApi {
                 if (first && row.text().contains("Non sono disponibili manifestazioni con i filtri selezionati"))
                     break;
 
-                events.add(new Event(year, row));
                 first = false;
+
+                try {
+                    events.add(new Event(year, row));
+                } catch (ParseException ignored) {
+                }
             }
 
             return events;

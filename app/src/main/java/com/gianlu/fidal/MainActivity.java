@@ -22,7 +22,7 @@ import java.util.Calendar;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements FidalApi.OnResult<List<Event>> {
+public class MainActivity extends AppCompatActivity implements FidalApi.OnResult<List<Event>>, EventsAdapter.Listener {
     private RecyclerViewLayout layout;
     private FidalApi api;
     private LabeledSpinner year;
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements FidalApi.OnResult
     private CheckBox federalChampionship;
     private LabeledSpinner approval;
     private LabeledSpinner approvalType;
+    private EventBottomSheet bottomSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,12 +119,24 @@ public class MainActivity extends AppCompatActivity implements FidalApi.OnResult
             return;
         }
 
-        layout.loadListData(new EventsAdapter(this, result));
+        layout.loadListData(new EventsAdapter(this, result, this));
     }
 
     @Override
     public void exception(@NonNull Exception ex) {
         layout.showError(R.string.failedLoading_reason, ex.getLocalizedMessage());
+    }
+
+    @Override
+    public void selected(@NonNull Event event) {
+        bottomSheet = new EventBottomSheet();
+        bottomSheet.show(this, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (bottomSheet.isVisible()) bottomSheet.dismiss();
+        else super.onBackPressed();
     }
 
     private class CollateralItemSelectionListener<A> implements LabeledSpinner.SelectListener<A>, CompoundButton.OnCheckedChangeListener {

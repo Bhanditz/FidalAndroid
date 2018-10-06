@@ -17,10 +17,12 @@ import java.util.List;
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
     private final LayoutInflater inflater;
     private final List<Event> events;
+    private final Listener listener;
 
-    public EventsAdapter(Context context, List<Event> events) {
+    public EventsAdapter(Context context, List<Event> events, Listener listener) {
         this.inflater = LayoutInflater.from(context);
         this.events = events;
+        this.listener = listener;
     }
 
     @NonNull
@@ -31,7 +33,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Event event = events.get(position);
+        final Event event = events.get(position);
         holder.name.setText(event.name);
         holder.type.setHtml(R.string.eventType, event.type.name());
         holder.level.setHtml(R.string.eventLevel, event.level.name());
@@ -44,11 +46,22 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             holder.desc.setVisibility(View.VISIBLE);
             holder.desc.setText(event.desc);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) listener.selected(event);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return events.size();
+    }
+
+    public interface Listener {
+        void selected(@NonNull Event event);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
