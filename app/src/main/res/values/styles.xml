@@ -14,7 +14,7 @@
     </style>
 
     <style name="LabeledSpinnersInToolbar" parent="AppTheme">
-        <item name="labelTextColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="textColor">?android:attr/textColorPrimaryInverse</item>
         <item name="dropdownTextColor">?android:attr/textColorPrimary</item>
     </style>
 </resources>

@@ -37,6 +37,7 @@
                     android:id="@+id/main_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/chip_background"
                     app:labelText="@string/year" />
 
@@ -44,6 +45,7 @@
                     android:id="@+id/main_month"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/chip_background"
                     app:labelText="@string/month" />
 
@@ -63,50 +65,32 @@
                 android:orientation="horizontal">
 
                 <com.gianlu.commonutils.Spinners.LabeledSpinner
-                    android:id="@+id/main_region"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/chip_background"
-                    app:labelText="@string/region" />
-
-                <com.gianlu.commonutils.Spinners.LabeledSpinner
                     android:id="@+id/main_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/chip_background"
                     app:labelText="@string/type" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
 
                 <com.gianlu.commonutils.Spinners.LabeledSpinner
                     android:id="@+id/main_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/chip_background"
                     app:labelText="@string/category" />
 
-                <CheckBox
-                    android:id="@+id/main_federalChampionship"
+                <com.gianlu.commonutils.Spinners.LabeledSpinner
+                    android:id="@+id/main_region"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:background="@drawable/chip_background"
-                    android:buttonTint="?android:attr/textColorPrimaryInverse"
-                    android:paddingEnd="16dp"
-                    android:text="@string/federalChampionship"
-                    android:textColor="?android:attr/textColorPrimaryInverse" />
+                    app:labelText="@string/region" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
@@ -114,6 +98,8 @@
                     android:id="@+id/main_approval"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/chip_background"
                     app:labelText="@string/approval" />
 
@@ -121,9 +107,22 @@
                     android:id="@+id/main_approvalType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/chip_background"
                     app:labelText="@string/approvalType" />
             </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/main_federalChampionship"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/chip_background"
+                android:buttonTint="?android:attr/textColorPrimaryInverse"
+                android:paddingEnd="16dp"
+                android:text="@string/federalChampionship"
+                android:textColor="?android:attr/textColorPrimaryInverse" />
         </LinearLayout>
     </android.support.design.widget.AppBarLayout>
 

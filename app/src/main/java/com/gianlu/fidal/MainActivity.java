@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements FidalApi.OnResult
         level.setItems(FidalApi.Level.list(), FidalApi.Level.ANY);
         region.setOnItemSelectedListener(new CollateralItemSelectionListener<>(null));
         region.setItems(FidalApi.Region.list(), FidalApi.Region.ANY);
+        region.setVisibility(View.GONE);
         type.setOnItemSelectedListener(new CollateralItemSelectionListener<>(new LabeledSpinner.SelectListener<FidalApi.Type>() {
             @Override
             public void selected(@NonNull FidalApi.Type item) {
@@ -88,8 +89,10 @@ public class MainActivity extends AppCompatActivity implements FidalApi.OnResult
         federalChampionship.setChecked(false);
         approval.setOnItemSelectedListener(new CollateralItemSelectionListener<>(null));
         approval.setItems(FidalApi.Approval.list(), FidalApi.Approval.ANY);
+        approval.setVisibility(View.GONE);
         approvalType.setOnItemSelectedListener(new CollateralItemSelectionListener<>(null));
         approvalType.setItems(FidalApi.ApprovalType.list(), FidalApi.ApprovalType.ANY);
+        approvalType.setVisibility(View.GONE);
 
         layout = findViewById(R.id.main_layout);
         layout.disableSwipeRefresh();
