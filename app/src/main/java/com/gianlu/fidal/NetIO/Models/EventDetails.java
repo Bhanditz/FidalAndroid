@@ -98,7 +98,7 @@ public class EventDetails {
         if (elm == null) return null;
 
         Element a = elm.selectFirst("a");
-        return new Link(a.attr("href"), a.text());
+        return new Link(a == null ? null : a.attr("href"), a == null ? elm.text() : a.text());
     }
 
     @NonNull
@@ -160,7 +160,7 @@ public class EventDetails {
         private final String url;
         private final String text;
 
-        private Link(@NonNull String url, @NonNull String text) {
+        private Link(@Nullable String url, @NonNull String text) {
             this.url = url;
             this.text = text;
         }

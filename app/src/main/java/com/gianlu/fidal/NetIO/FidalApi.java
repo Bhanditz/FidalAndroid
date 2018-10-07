@@ -80,13 +80,15 @@ public class FidalApi {
         url.addQueryParameter("submit", "Invia");
         url.addQueryParameter("anno", String.valueOf(year));
         url.addQueryParameter("mese", String.valueOf(month.val()));
-        url.addQueryParameter("livello", region != Region.ANY ? Level.ANY.val : level.val);
-        url.addQueryParameter("new_regione", region.val);
+        url.addQueryParameter("livello", region != Region.ANY ? Level.REGIONAL.val : level.val);
+        if (level == Level.REGIONAL) url.addQueryParameter("new_regione", region.val);
         url.addQueryParameter("new_tipo", String.valueOf(type.val));
         url.addQueryParameter("new_categoria", category.val);
         url.addQueryParameter("new_campionati", String.valueOf(federal ? 1 : 0));
-        url.addQueryParameter("omologazione", approval.val);
-        url.addQueryParameter("omologazione_tipo", approvalType.val);
+        if (type.hasApproval()) {
+            url.addQueryParameter("omologazione", approval.val);
+            url.addQueryParameter("omologazione_tipo", approvalType.val);
+        }
 
         if (currentGetCalendarTask != null) currentGetCalendarTask.abort();
         currentGetCalendarTask = new Requester<>(url.build(), new EventsProcessor(year), listener);
@@ -97,7 +99,7 @@ public class FidalApi {
     private Document requestSync(@NonNull HttpUrl url) throws IOException {
         try (Response resp = client.newCall(new Request.Builder().url(url).get().build()).execute()) {
             if (resp.code() != 200)
-                throw new IOException(String.format("%d: %s", resp.code(), resp.message()));
+                throw new IOException(String.format("%d: %s (%s)", resp.code(), resp.message(), url.toString()));
 
             ResponseBody body = resp.body();
             if (body == null)
