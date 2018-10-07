@@ -75,4 +75,10 @@
     <string name="no">No</string>
     <string name="type_track">Track</string>
     <string name="noEventsFound">No events have been found!</string>
+    <string name="level_provincial">Provincial</string>
+    <string name="level_silver">Silver</string>
+    <string name="level_bronze">Bronze</string>
+    <string name="level_gold">Gold</string>
+    <string name="level_international">International</string>
+    <string name="level_regionalOpen">Regional open</string>
 </resources>

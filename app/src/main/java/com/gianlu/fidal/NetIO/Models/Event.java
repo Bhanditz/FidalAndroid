@@ -1,8 +1,11 @@
 package com.gianlu.fidal.NetIO.Models;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.gianlu.commonutils.GetText;
 import com.gianlu.fidal.NetIO.FidalApi;
+import com.gianlu.fidal.R;
 
 import org.jsoup.nodes.Element;
 
@@ -25,7 +28,7 @@ public class Event {
         this.type = FidalApi.Type.parseType(row.child(4).text());
     }
 
-    public enum Level {
+    public enum Level implements GetText {
         INTERNAZIONALE, GOLD, SILVER,
         BRONZE, NAZIONALE, PROVINCIALE,
         REGIONALE_OPEN;
@@ -71,6 +74,29 @@ public class Event {
                     return PROVINCIALE;
                 default:
                     throw new FidalApi.ParseException("Unknown level: " + text);
+            }
+        }
+
+        @NonNull
+        @Override
+        public String getText(@NonNull Context context) {
+            switch (this) {
+                case INTERNAZIONALE:
+                    return context.getString(R.string.level_international);
+                case GOLD:
+                    return context.getString(R.string.level_gold);
+                case SILVER:
+                    return context.getString(R.string.level_silver);
+                case BRONZE:
+                    return context.getString(R.string.level_bronze);
+                case NAZIONALE:
+                    return context.getString(R.string.level_national);
+                case PROVINCIALE:
+                    return context.getString(R.string.level_provincial);
+                case REGIONALE_OPEN:
+                    return context.getString(R.string.level_regionalOpen);
+                default:
+                    throw new IllegalArgumentException("Unknown level: " + this);
             }
         }
     }

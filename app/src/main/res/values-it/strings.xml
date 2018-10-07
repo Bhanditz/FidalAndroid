@@ -54,4 +54,10 @@
     <string name="type_track">Pista</string>
     <string name="failedLoading_reason">Caricamento fallito: %s</string>
     <string name="noEventsFound">Non sono disponibili manifestazioni con i filtri selezionati.</string>
+    <string name="level_provincial">Provinciale</string>
+    <string name="level_silver">Silver</string>
+    <string name="level_bronze">Bronze</string>
+    <string name="level_gold">Gold</string>
+    <string name="level_international">Internazionale</string>
+    <string name="level_regionalOpen">Regionale open</string>
 </resources>

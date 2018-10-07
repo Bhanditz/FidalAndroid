@@ -7,8 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
 
+import com.gianlu.commonutils.GetText;
 import com.gianlu.commonutils.Logging;
-import com.gianlu.commonutils.Spinners.LabeledSpinner;
 import com.gianlu.fidal.NetIO.Models.Event;
 import com.gianlu.fidal.NetIO.Models.EventDetails;
 import com.gianlu.fidal.R;
@@ -113,7 +113,7 @@ public class FidalApi {
         executorService.execute(new Requester<>(HttpUrl.get(payload.url), EVENT_DETAILS_PROCESSOR, listener));
     }
 
-    public enum Approval implements LabeledSpinner.GetText {
+    public enum Approval implements GetText {
         ANY(""), YES("si"), NO("no");
 
         private final String val;
@@ -143,7 +143,7 @@ public class FidalApi {
         }
     }
 
-    public enum ApprovalType implements LabeledSpinner.GetText {
+    public enum ApprovalType implements GetText {
         ANY(""), A("a"), B("b");
 
         private final String val;
@@ -173,7 +173,7 @@ public class FidalApi {
         }
     }
 
-    public enum Month implements LabeledSpinner.GetText {
+    public enum Month implements GetText {
         JANUARY, FEBRUARY, MARCH, APRIL,
         MAY, JUNE, JULY, AUGUST,
         SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER;
@@ -226,7 +226,7 @@ public class FidalApi {
         }
     }
 
-    public enum Level implements LabeledSpinner.GetText {
+    public enum Level implements GetText {
         ANY(""), NATIONAL("COD"), REGIONAL("REG");
 
         private final String val;
@@ -256,7 +256,7 @@ public class FidalApi {
         }
     }
 
-    public enum Region implements LabeledSpinner.GetText {
+    public enum Region implements GetText {
         ANY(""), ABRUZZO("ABRUZZO"), ALTO_ADIGE("ALTOADIGE"), BASILICATA("BASILICATA"),
         CALABRIA("CALABRIA"), CAMPANIA("CAMPANIA"), EMILIA_ROMAGNA("EMILIAROMAGNA"),
         FRIULI_VENEZIA_GIULIA("FRIULIVENEZIAGIULIA"), LAZIO("LAZIO"), LIGURIA("LIGURIA"),
@@ -329,7 +329,7 @@ public class FidalApi {
         }
     }
 
-    public enum Type implements LabeledSpinner.GetText {
+    public enum Type implements GetText {
         ANY(0), CROSS(2), INDOOR(3), PISTA_REGIONAL(5), MARCIA_STRADA(8), MONTAGNA(11),
         MONTAGNA_TRAIL(4), NORDIC_WALKING(13), OUTDOOR(5), PIAZZA_ALTRO(10), STRADA(6),
         TRAIL(12), ULTRAMARATONA(7), ULTRAMARATONA_TRAIL(9), MONTAGNA_REGIONAL(4), TRAIL_REGIONAL(7),;
@@ -425,7 +425,7 @@ public class FidalApi {
         }
     }
 
-    public enum Category implements LabeledSpinner.GetText {
+    public enum Category implements GetText {
         ANY(""), ESORDIENTI("ESO"), RAGAZZI("RAG"), CADETTI("CAD"), ALLIEVI("ALL"),
         JUNIORES("JUN"), PROMESSE("PRO"), SENIORES("SEN"), MASTER("MAS");
 

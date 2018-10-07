@@ -18,9 +18,11 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     private final LayoutInflater inflater;
     private final List<Event> events;
     private final Listener listener;
+    private final Context context;
 
     public EventsAdapter(Context context, List<Event> events, Listener listener) {
         this.inflater = LayoutInflater.from(context);
+        this.context = context;
         this.events = events;
         this.listener = listener;
     }
@@ -35,8 +37,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Event event = events.get(position);
         holder.name.setText(event.name);
-        holder.type.setHtml(R.string.eventType, event.type.name());
-        holder.level.setHtml(R.string.eventLevel, event.level.name());
+        holder.type.setHtml(R.string.eventType, event.type.getText(context));
+        holder.level.setHtml(R.string.eventLevel, event.level.getText(context));
         holder.date.setHtml(R.string.eventDate, event.date.toReadable());
         holder.place.setHtml(R.string.eventPlace, event.place);
 
