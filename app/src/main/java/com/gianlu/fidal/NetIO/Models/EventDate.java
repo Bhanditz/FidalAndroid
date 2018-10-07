@@ -57,10 +57,13 @@ public class EventDate {
     }
 
     @NonNull
-    public String toReadable() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        if (isSingleDay()) return sdf.format(start);
-        else return sdf.format(start) + " - " + sdf.format(end);
+    public String toReadableShort() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd", Locale.getDefault());
+        if (isSingleDay()) {
+            return sdf.format(start);
+        } else {
+            return sdf.format(start) + " - " + sdf.format(end);
+        }
     }
 
     public boolean isSingleDay() {

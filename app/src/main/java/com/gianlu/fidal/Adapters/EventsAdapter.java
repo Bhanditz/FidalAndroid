@@ -6,9 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gianlu.commonutils.SuperTextView;
+import com.gianlu.commonutils.FontsManager;
 import com.gianlu.fidal.NetIO.Models.Event;
 import com.gianlu.fidal.R;
 
@@ -37,10 +38,17 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Event event = events.get(position);
         holder.name.setText(event.name);
-        holder.type.setHtml(R.string.eventType, event.type.getText(context));
-        holder.level.setHtml(R.string.eventLevel, event.level.getText(context));
-        holder.date.setHtml(R.string.eventDate, event.date.toReadable());
-        holder.place.setHtml(R.string.eventPlace, event.place);
+
+        FontsManager.set(holder.date, FontsManager.ROBOTO_LIGHT);
+        holder.date.setText(event.date.toReadableShort());
+
+        holder.type.setText(event.type.getText(context));
+        holder.typeIcon.setImageResource(event.type.getIcon());
+
+        holder.level.setText(event.level.getText(context));
+        holder.levelIcon.setImageResource(event.level.getIcon());
+
+        holder.place.setText(event.place);
 
         if (event.desc.isEmpty()) {
             holder.desc.setVisibility(View.GONE);
@@ -67,12 +75,14 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+        final TextView date;
         final TextView name;
         final TextView desc;
-        final SuperTextView type;
-        final SuperTextView level;
-        final SuperTextView date;
-        final SuperTextView place;
+        final TextView type;
+        final ImageView typeIcon;
+        final TextView level;
+        final ImageView levelIcon;
+        final TextView place;
 
         ViewHolder(@NonNull ViewGroup parent) {
             super(inflater.inflate(R.layout.item_event, parent, false));
@@ -80,7 +90,9 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             name = itemView.findViewById(R.id.eventItem_name);
             desc = itemView.findViewById(R.id.eventItem_desc);
             type = itemView.findViewById(R.id.eventItem_type);
+            typeIcon = itemView.findViewById(R.id.eventItem_typeIcon);
             level = itemView.findViewById(R.id.eventItem_level);
+            levelIcon = itemView.findViewById(R.id.eventItem_levelIcon);
             date = itemView.findViewById(R.id.eventItem_date);
             place = itemView.findViewById(R.id.eventItem_place);
         }

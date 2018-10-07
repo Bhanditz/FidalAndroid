@@ -2,10 +2,6 @@
     <string name="app_name" translatable="false">FIDAL</string>
     <string name="failedLoading">Failed loading!</string>
     <string name="failedLoading_reason">Failed loading: %s</string>
-    <string name="eventType"><![CDATA[<b>Type</b>]]>: %s</string>
-    <string name="eventPlace"><![CDATA[<b>Place</b>]]>: %s</string>
-    <string name="eventLevel"><![CDATA[<b>Level</b>]]>: %s</string>
-    <string name="eventDate"><![CDATA[<b>Date</b>]]>: %s</string>
     <string name="year">Year</string>
     <string name="month">Month</string>
     <string name="level">Level</string>

@@ -1,6 +1,7 @@
 package com.gianlu.fidal.NetIO.Models;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 
 import com.gianlu.commonutils.GetText;
@@ -74,6 +75,28 @@ public class Event {
                     return PROVINCIALE;
                 default:
                     throw new FidalApi.ParseException("Unknown level: " + text);
+            }
+        }
+
+        @DrawableRes
+        public int getIcon() {
+            switch (this) {
+                case INTERNAZIONALE:
+                    return R.drawable.world;
+                case GOLD:
+                    return R.drawable.gold_medal;
+                case SILVER:
+                    return R.drawable.silver_medal;
+                case BRONZE:
+                    return R.drawable.bronze_medal;
+                case NAZIONALE:
+                    return R.drawable.italy_flag;
+                case PROVINCIALE:
+                    return R.drawable.pin_1;
+                case REGIONALE_OPEN:
+                    return R.drawable.pin_2;
+                default:
+                    throw new IllegalArgumentException("Missing icon for " + this);
             }
         }
 

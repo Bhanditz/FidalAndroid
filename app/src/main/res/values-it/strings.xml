@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="failedLoading">Caricamento fallito!</string>
-    <string name="eventType"><![CDATA[<b>Tipologia</b>]]>: %s</string>
-    <string name="eventPlace"><![CDATA[<b>Località</b>]]>: %s</string>
-    <string name="eventLevel"><![CDATA[<b>Livello</b>]]>: %</string>
-    <string name="eventDate"><![CDATA[<b>Data</b>]]>: %s</string>
     <string name="year">Anno</string>
     <string name="month">Mese</string>
     <string name="level">Livello</string>

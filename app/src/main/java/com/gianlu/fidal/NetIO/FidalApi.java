@@ -3,6 +3,7 @@ package com.gianlu.fidal.NetIO;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
@@ -380,6 +381,34 @@ public class FidalApi {
                     return FidalApi.Type.MARCIA_STRADA;
                 default:
                     throw new FidalApi.ParseException("Unknown type: " + text);
+            }
+        }
+
+        @DrawableRes
+        public int getIcon() {
+            switch (this) {
+                case STRADA:
+                case MARCIA_STRADA:
+                    return R.drawable.map_city;
+                case MONTAGNA_REGIONAL:
+                case MONTAGNA:
+                case NORDIC_WALKING:
+                case MONTAGNA_TRAIL:
+                    return R.drawable.mountains;
+                case PISTA_REGIONAL:
+                case OUTDOOR:
+                case INDOOR: // TODO: Might have different icon
+                    return R.drawable.running_track;
+                case PIAZZA_ALTRO:
+                    return R.drawable.urban;
+                case TRAIL_REGIONAL:
+                case TRAIL:
+                case CROSS:
+                case ULTRAMARATONA:
+                case ULTRAMARATONA_TRAIL:
+                    return R.drawable.forest;
+                default:
+                    throw new IllegalArgumentException("Missing icon for " + this);
             }
         }
 
