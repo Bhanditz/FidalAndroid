@@ -397,8 +397,9 @@ public class FidalApi {
                     return R.drawable.mountains;
                 case PISTA_REGIONAL:
                 case OUTDOOR:
-                case INDOOR: // TODO: Might have different icon
                     return R.drawable.running_track;
+                case INDOOR:
+                    return R.drawable.indoor_track;
                 case PIAZZA_ALTRO:
                     return R.drawable.urban;
                 case TRAIL_REGIONAL:
