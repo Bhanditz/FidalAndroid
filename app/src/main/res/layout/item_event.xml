@@ -28,7 +28,7 @@
             android:ellipsize="marquee"
             android:maxLines="2"
             android:textColor="?android:attr/textColorPrimary"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <TextView
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:gravity="center"
-                android:maxWidth="108dp"
+                android:maxWidth="92dp"
                 android:maxLines="2"
                 android:textAlignment="center"
                 android:textSize="12sp" />

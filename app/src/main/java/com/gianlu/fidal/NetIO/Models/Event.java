@@ -23,10 +23,28 @@ public class Event {
         this.date = EventDate.fromEvent(year, row.child(1).child(0).text());
         this.level = Level.parse(row.child(2).child(0).text());
         this.name = row.child(3).child(0).text();
-        this.url = row.child(3).child(0).attr("href");
         this.desc = row.child(3).child(2).text();
         this.place = row.child(5).text();
         this.type = FidalApi.Type.parseType(row.child(4).text());
+        this.url = parseUrl(row.child(3).child(0).attr("href"), level);
+    }
+
+    @NonNull
+    private static String parseUrl(String original, @NonNull Level level) throws FidalApi.ParseException {
+        int index = original.lastIndexOf('/');
+        if (index == -1) throw new FidalApi.ParseException("Couldn't find '/': " + original);
+
+        String last = original.substring(index + 1);
+        if (last.contains("COD") || last.contains("REG"))
+            return original;
+
+        if (level == Level.NAZIONALE || level == Level.BRONZE || level == Level.GOLD || level == Level.SILVER || level == Level.INTERNAZIONALE) {
+            last = "COD" + last;
+        } else if (level == Level.REGIONALE_OPEN || level == Level.PROVINCIALE) {
+            last = "REG" + last;
+        }
+
+        return original.substring(0, index + 1) + last;
     }
 
     public enum Level implements GetText {

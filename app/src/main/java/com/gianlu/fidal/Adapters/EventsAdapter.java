@@ -39,7 +39,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         final Event event = events.get(position);
         holder.name.setText(event.name);
 
-        FontsManager.set(holder.date, FontsManager.ROBOTO_LIGHT);
         holder.date.setText(event.date.toReadableShort());
 
         holder.type.setText(event.type.getText(context));
@@ -95,6 +94,9 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             levelIcon = itemView.findViewById(R.id.eventItem_levelIcon);
             date = itemView.findViewById(R.id.eventItem_date);
             place = itemView.findViewById(R.id.eventItem_place);
+
+            FontsManager.set(date, FontsManager.ROBOTO_LIGHT);
+            FontsManager.set(name, FontsManager.ROBOTO_REGULAR);
         }
     }
 }

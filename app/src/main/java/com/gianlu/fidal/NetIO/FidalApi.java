@@ -100,7 +100,7 @@ public class FidalApi {
     private Document requestSync(@NonNull HttpUrl url) throws IOException {
         try (Response resp = client.newCall(new Request.Builder().url(url).get().build()).execute()) {
             if (resp.code() == 302) {
-                throw new IOException(String.format("Attempt redirect to %s.", resp.header("Location")));
+                throw new IOException(String.format("Attempted redirect to %s from %s.", resp.header("Location"), url.toString()));
             } else if (resp.code() != 200) {
                 throw new IOException(String.format("%d: %s (%s)", resp.code(), resp.message(), url.toString()));
             }
