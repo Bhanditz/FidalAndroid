@@ -21,7 +21,7 @@ public class Event {
 
     public Event(int year, @NonNull Element row) throws FidalApi.ParseException {
         this.date = EventDate.fromEvent(year, row.child(1).child(0).text());
-        this.level = Level.parse(row.child(2).child(0).text());
+        this.level = Level.parse(row.child(2).child(0).attr("title"));
         this.name = row.child(3).child(0).text();
         this.desc = row.child(3).child(2).text();
         this.place = row.child(5).text();
@@ -40,7 +40,7 @@ public class Event {
 
         if (level == Level.NAZIONALE || level == Level.BRONZE || level == Level.GOLD || level == Level.SILVER || level == Level.INTERNAZIONALE) {
             last = "COD" + last;
-        } else if (level == Level.REGIONALE_OPEN || level == Level.PROVINCIALE) {
+        } else if (level == Level.REGIONALE_OPEN || level == Level.REGIONALE || level == Level.PROVINCIALE) {
             last = "REG" + last;
         }
 
@@ -50,25 +50,27 @@ public class Event {
     public enum Level implements GetText {
         INTERNAZIONALE, GOLD, SILVER,
         BRONZE, NAZIONALE, PROVINCIALE,
-        REGIONALE_OPEN;
+        REGIONALE_OPEN, REGIONALE;
 
         @NonNull
         private static Level parse(@NonNull String text) throws FidalApi.ParseException {
             switch (text) {
-                case "I":
+                case "INTERNAZ.LE":
                     return INTERNAZIONALE;
-                case "G":
+                case "GOLD":
                     return GOLD;
-                case "S":
+                case "SILVER":
                     return SILVER;
-                case "B":
+                case "BRONZE":
                     return BRONZE;
-                case "N":
+                case "NAZ.LE":
                     return NAZIONALE;
-                case "P":
+                case "PROVINCIALE":
                     return PROVINCIALE;
-                case "R":
+                case "REGIONALE OPEN":
                     return REGIONALE_OPEN;
+                case "REGIONALE":
+                    return REGIONALE;
                 default:
                     throw new FidalApi.ParseException("Unknown level: " + text);
             }
@@ -77,6 +79,8 @@ public class Event {
         @NonNull
         public static Level parseExtended(@NonNull String text) throws FidalApi.ParseException {
             switch (text) {
+                case "REGIONALE":
+                    return REGIONALE;
                 case "REGIONALE OPEN":
                     return REGIONALE_OPEN;
                 case "Nazionale":
@@ -111,6 +115,7 @@ public class Event {
                     return R.drawable.italy_flag;
                 case PROVINCIALE:
                     return R.drawable.pin_1;
+                case REGIONALE:
                 case REGIONALE_OPEN:
                     return R.drawable.pin_2;
                 default:
@@ -136,6 +141,8 @@ public class Event {
                     return context.getString(R.string.level_provincial);
                 case REGIONALE_OPEN:
                     return context.getString(R.string.level_regionalOpen);
+                case REGIONALE:
+                    return context.getString(R.string.level_regional);
                 default:
                     throw new IllegalArgumentException("Unknown level: " + this);
             }

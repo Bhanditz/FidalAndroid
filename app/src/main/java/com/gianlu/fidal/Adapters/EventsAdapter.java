@@ -96,6 +96,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             place = itemView.findViewById(R.id.eventItem_place);
 
             FontsManager.set(date, FontsManager.ROBOTO_LIGHT);
+            FontsManager.set(desc, FontsManager.ROBOTO_LIGHT);
             FontsManager.set(name, FontsManager.ROBOTO_REGULAR);
         }
     }
