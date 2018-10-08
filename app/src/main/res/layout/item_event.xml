@@ -100,6 +100,11 @@
                 android:id="@+id/eventItem_place"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxWidth="108dp"
+                android:maxLines="2"
+                android:textAlignment="center"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
