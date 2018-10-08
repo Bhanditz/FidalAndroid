@@ -56,4 +56,5 @@
     <string name="level_gold">Gold</string>
     <string name="level_international">Internazionale</string>
     <string name="level_regionalOpen">Regionale open</string>
+    <string name="failedOpeningUrl">Impossibile aprire questa pagina!</string>
 </resources>

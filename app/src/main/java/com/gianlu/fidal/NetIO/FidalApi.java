@@ -132,6 +132,15 @@ public class FidalApi {
         }
 
         @NonNull
+        public static Approval parse(@NonNull String str) throws ParseException {
+            for (Approval approval : values())
+                if (approval.val.equals(str))
+                    return approval;
+
+            throw new ParseException("Unknown approval: " + str);
+        }
+
+        @NonNull
         @Override
         public String getText(@NonNull Context context) {
             switch (this) {
@@ -159,6 +168,15 @@ public class FidalApi {
         @NonNull
         public static List<ApprovalType> list() {
             return Arrays.asList(values());
+        }
+
+        @NonNull
+        public static ApprovalType parse(@NonNull String str) throws ParseException {
+            for (ApprovalType approvalType : values())
+                if (approvalType.val.equals(str))
+                    return approvalType;
+
+            throw new ParseException("Unknown approval type: " + str);
         }
 
         @NonNull
@@ -190,6 +208,10 @@ public class FidalApi {
         @NonNull
         public static Month now() {
             return values()[Calendar.getInstance().get(Calendar.MONTH)];
+        }
+
+        public static Month fromInt(int i) {
+            return values()[i - 1];
         }
 
         private int val() {
@@ -245,6 +267,15 @@ public class FidalApi {
         }
 
         @NonNull
+        public static Level parse(@NonNull String str) throws ParseException {
+            for (Level level : values())
+                if (str.equals(level.val))
+                    return level;
+
+            throw new ParseException("Unknown level: " + str);
+        }
+
+        @NonNull
         @Override
         public String getText(@NonNull Context context) {
             switch (this) {
@@ -277,6 +308,15 @@ public class FidalApi {
         @NonNull
         public static List<Region> list() {
             return Arrays.asList(values());
+        }
+
+        @NonNull
+        public static Region parse(@NonNull String str) throws ParseException {
+            for (Region region : values())
+                if (region.val.equals(str))
+                    return region;
+
+            throw new ParseException("Unknown region: " + str);
         }
 
         @NonNull
@@ -355,7 +395,16 @@ public class FidalApi {
         }
 
         @NonNull
-        public static FidalApi.Type parseType(@NonNull String text) throws FidalApi.ParseException {
+        public static Type fromInt(int i) throws ParseException {
+            for (Type type : values())
+                if (type.val == i)
+                    return type;
+
+            throw new ParseException("Unknown type: " + i);
+        }
+
+        @NonNull
+        public static Type parseType(@NonNull String text) throws FidalApi.ParseException {
             switch (text) {
                 case "OUTDOOR":
                     return FidalApi.Type.OUTDOOR;
@@ -479,6 +528,15 @@ public class FidalApi {
                 if (cat.val.equals(val)) return cat;
 
             throw new ParseException("Unknown category: " + val);
+        }
+
+        @NonNull
+        public static Category parse(@NonNull String str) throws ParseException {
+            for (Category category : values())
+                if (category.val.equals(str))
+                    return category;
+
+            throw new ParseException("Unknown category: " + str);
         }
 
         @NonNull

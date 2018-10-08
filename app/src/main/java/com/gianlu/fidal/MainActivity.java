@@ -1,5 +1,7 @@
 package com.gianlu.fidal;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,12 +16,14 @@ import android.widget.CompoundButton;
 
 import com.gianlu.commonutils.RecyclerViewLayout;
 import com.gianlu.commonutils.Spinners.LabeledSpinner;
+import com.gianlu.commonutils.Toaster;
 import com.gianlu.fidal.Adapters.EventsAdapter;
 import com.gianlu.fidal.NetIO.FidalApi;
 import com.gianlu.fidal.NetIO.Models.Event;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity implements FidalApi.OnResult<List<Event>>, EventsAdapter.Listener {
@@ -99,8 +103,69 @@ public class MainActivity extends AppCompatActivity implements FidalApi.OnResult
         layout.getList().addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         layout.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
+        if (Objects.equals(getIntent().getAction(), Intent.ACTION_VIEW) || Objects.equals(getIntent().getAction(), Intent.ACTION_SEND)) {
+            Uri url = getIntent().getData();
+            if (url != null) {
+                try {
+                    setInputFromUrl(url);
+                } catch (FidalApi.ParseException ex) {
+                    Toaster.with(this).message(R.string.failedOpeningUrl).ex(ex).show();
+                }
+            }
+        }
+
         api = FidalApi.get();
         somethingChanged();
+    }
+
+    private void setInputFromUrl(Uri url) throws FidalApi.ParseException {
+        String yearStr = url.getQueryParameter("anno");
+        if (yearStr != null && yearStr.isEmpty()) {
+            try {
+                year.setSelectedItem(Integer.parseInt(yearStr), false);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+
+        String monthStr = url.getQueryParameter("mese");
+        if (monthStr != null && monthStr.isEmpty()) {
+            try {
+                month.setSelectedItem(FidalApi.Month.fromInt(Integer.parseInt(monthStr)), false);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+
+        String levelStr = url.getQueryParameter("livello");
+        if (levelStr != null)
+            level.setSelectedItem(FidalApi.Level.parse(levelStr), false);
+
+        String regionStr = url.getQueryParameter("new_regione");
+        if (regionStr != null)
+            region.setSelectedItem(FidalApi.Region.parse(regionStr), false);
+
+        String typeStr = url.getQueryParameter("new_tipo");
+        if (typeStr != null && typeStr.isEmpty()) {
+            try {
+                type.setSelectedItem(FidalApi.Type.fromInt(Integer.parseInt(typeStr)), false);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+
+        String categoryStr = url.getQueryParameter("new_categoria");
+        if (categoryStr != null)
+            category.setSelectedItem(FidalApi.Category.parse(categoryStr), false);
+
+        String federalStr = url.getQueryParameter("new_campionati");
+        if (federalStr != null)
+            federalChampionship.setChecked(Boolean.parseBoolean(federalStr));
+
+        String approvalStr = url.getQueryParameter("omologazione");
+        if (approvalStr != null)
+            approval.setSelectedItem(FidalApi.Approval.parse(approvalStr), false);
+
+        String approvalTypeStr = url.getQueryParameter("omologazione_tipo");
+        if (approvalTypeStr != null)
+            approvalType.setSelectedItem(FidalApi.ApprovalType.parse(approvalTypeStr), false);
     }
 
     private void somethingChanged() {
