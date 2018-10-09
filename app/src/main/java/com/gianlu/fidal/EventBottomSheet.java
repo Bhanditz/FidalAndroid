@@ -18,6 +18,7 @@ import com.gianlu.fidal.NetIO.Models.Event;
 import com.gianlu.fidal.NetIO.Models.EventDetails;
 
 public class EventBottomSheet extends ThemedModalBottomSheet<Event, EventDetails> {
+    private AdvancedDateDisplayView date;
 
     @Override
     protected boolean onCreateHeader(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent, @NonNull Event payload) {
@@ -41,8 +42,11 @@ public class EventBottomSheet extends ThemedModalBottomSheet<Event, EventDetails
 
     @Override
     protected void onCreateBody(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent, @NonNull Event payload) {
-        isLoading(true);
+        inflater.inflate(R.layout.sheet_event_details, parent, true);
 
+        date = parent.findViewById(R.id.eventDetailsSheet_date);
+
+        isLoading(true);
         FidalApi.get().getEvent(payload, new FidalApi.OnResult<EventDetails>() {
             @Override
             public void result(@NonNull EventDetails result) {
@@ -60,7 +64,8 @@ public class EventBottomSheet extends ThemedModalBottomSheet<Event, EventDetails
     @Override
     protected void onRequestedUpdate(@NonNull EventDetails payload) {
         isLoading(false);
-        // TODO: Fill body
+
+        date.setDate(payload.date);
     }
 
     @Override

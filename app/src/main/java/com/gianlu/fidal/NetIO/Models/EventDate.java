@@ -10,8 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class EventDate {
-    private final long start;
-    private final long end;
+    public final long start;
+    public final long end;
 
     public EventDate(long start, long end) {
         this.start = start;
