@@ -10,6 +10,7 @@ import android.support.annotation.WorkerThread;
 
 import com.gianlu.commonutils.GetText;
 import com.gianlu.commonutils.Logging;
+import com.gianlu.fidal.NetIO.Models.AthleteDetails;
 import com.gianlu.fidal.NetIO.Models.Event;
 import com.gianlu.fidal.NetIO.Models.EventDetails;
 import com.gianlu.fidal.R;
@@ -43,6 +44,14 @@ public class FidalApi {
             return new EventDetails(element);
         }
     };
+    private static final Processor<AthleteDetails> ATHLETE_DETAILS_PROCESSOR = new Processor<AthleteDetails>() {
+        @NonNull
+        @Override
+        public AthleteDetails process(@NonNull Document document) throws ParseException {
+            Element element = document.selectFirst("#content .section .text-holder");
+            return new AthleteDetails(element);
+        }
+    };
     private static FidalApi instance;
     private final OkHttpClient client;
     private final ExecutorService executorService = Executors.newCachedThreadPool();
@@ -70,6 +79,10 @@ public class FidalApi {
         List<Integer> list = new ArrayList<>((year - 2002) + 1);
         for (int i = year; i > 2002; i--) list.add(i);
         return list;
+    }
+
+    public void getAthleteDetails(String url, OnResult<AthleteDetails> listener) {
+        executorService.execute(new Requester<>(HttpUrl.get(url), ATHLETE_DETAILS_PROCESSOR, listener));
     }
 
     /**

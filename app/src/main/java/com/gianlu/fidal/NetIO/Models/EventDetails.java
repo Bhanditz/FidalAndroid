@@ -17,21 +17,21 @@ public class EventDetails {
     public final String title;
     public final String desc;
     public final EventDate date;
-    public final Link organizer;
+    public final PageLink organizer;
     public final FidalApi.Type type;
     public final Event.Level level;
     public final Categories category;
     public final Sex sex;
     public final String place;
     public final String email;
-    public final Link website;
-    public final Link organization;
+    public final PageLink website;
+    public final PageLink organization;
     public final FidalApi.Approval approval;
     public final FidalApi.ApprovalType approvalType;
     public final String authotiry;
-    public final Link information;
-    public final List<Link> attachments;
-    public final Link entriesResults;
+    public final PageLink information;
+    public final List<PageLink> attachments;
+    public final PageLink entriesResults;
 
     public EventDetails(@NonNull Element element) throws FidalApi.ParseException {
         title = element.child(1).text();
@@ -93,22 +93,22 @@ public class EventDetails {
 
     @Nullable
     @Contract("_, _, false -> !null")
-    private static Link findLink(@NonNull Element parent, @NonNull String name, boolean optional) throws FidalApi.ParseException {
+    private static PageLink findLink(@NonNull Element parent, @NonNull String name, boolean optional) throws FidalApi.ParseException {
         Element elm = find(parent, name, optional);
         if (elm == null) return null;
 
         Element a = elm.selectFirst("a");
-        return new Link(a == null ? null : a.attr("href"), a == null ? elm.text() : a.text());
+        return new PageLink(a == null ? null : a.attr("href"), a == null ? elm.text() : a.text());
     }
 
     @NonNull
-    private static List<Link> findLinks(@NonNull Element parent, @NonNull String name, boolean optional) throws FidalApi.ParseException {
+    private static List<PageLink> findLinks(@NonNull Element parent, @NonNull String name, boolean optional) throws FidalApi.ParseException {
         Element elm = find(parent, name, optional);
         if (elm == null) return Collections.emptyList();
 
-        List<Link> list = new ArrayList<>();
+        List<PageLink> list = new ArrayList<>();
         for (Element a : elm.select("a"))
-            list.add(new Link(a.attr("href"), a.text()));
+            list.add(new PageLink(a.attr("href"), a.text()));
         return list;
     }
 
@@ -153,16 +153,6 @@ public class EventDetails {
 
                 list.add(FidalApi.Category.parseCategory(text.substring(0, 3)));
             }
-        }
-    }
-
-    public static class Link {
-        private final String url;
-        private final String text;
-
-        private Link(@Nullable String url, @NonNull String text) {
-            this.url = url;
-            this.text = text;
         }
     }
 }
