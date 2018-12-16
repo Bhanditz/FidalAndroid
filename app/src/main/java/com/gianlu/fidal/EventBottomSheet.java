@@ -1,9 +1,5 @@
 package com.gianlu.fidal;
 
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +12,11 @@ import com.gianlu.commonutils.Toaster;
 import com.gianlu.fidal.NetIO.FidalApi;
 import com.gianlu.fidal.NetIO.Models.Event;
 import com.gianlu.fidal.NetIO.Models.EventDetails;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 public class EventBottomSheet extends ThemedModalBottomSheet<Event, EventDetails> {
     private AdvancedDateDisplayView date;

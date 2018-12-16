@@ -1,13 +1,14 @@
 package com.gianlu.fidal.NetIO.Models;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.NonNull;
 
 import com.gianlu.fidal.NetIO.FidalApi;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
 
 public class EventDate {
     public final long start;

@@ -1,7 +1,6 @@
 package com.gianlu.fidal.NetIO.Models;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.NonNull;
 
 import com.gianlu.fidal.NetIO.FidalApi;
 import com.gianlu.fidal.NetIO.Models.Competitions.AbsCompetition;
@@ -11,9 +10,12 @@ import org.jsoup.select.Elements;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
 
 public class AthleteDetails {
     public final String name;
@@ -21,6 +23,7 @@ public class AthleteDetails {
     public final long dateOfBirth;
     public final String membershipDetails; // TODO
     public final Map<AbsCompetition, CompetitionResults> results;
+    public final List<CompetitionRecord> records;
 
     public AthleteDetails(Element element) throws FidalApi.ParseException {
         Element common = element.child(1).child(0);
@@ -34,10 +37,26 @@ public class AthleteDetails {
         results = parseResults(tab2);
 
         Element tab3 = element.selectFirst("#tab3 .tab-holder"); // Records
-        // TODO: Records
+        records = parseRecords(tab3);
 
         Element tab6 = element.selectFirst("#tab6 .tab-holder"); // History
         // TODO: History
+    }
+
+    private static List<CompetitionRecord> parseRecords(@NonNull Element tab) {
+        List<CompetitionRecord> list = new ArrayList<>();
+        Element notWindy = tab.getElementsContainingOwnText("Non ventosi").first().nextElementSibling();
+        parseRecordsTable(notWindy, false, list);
+
+        Element windy = tab.getElementsContainingOwnText("Ventosi").first().nextElementSibling();
+        parseRecordsTable(windy, true, list);
+
+        return list;
+    }
+
+    private static void parseRecordsTable(Element table, boolean windy, List<CompetitionRecord> list) {
+        for (Element row : table.select("table tbody tr"))
+            list.add(new CompetitionRecord(row, windy));
     }
 
     @NonNull

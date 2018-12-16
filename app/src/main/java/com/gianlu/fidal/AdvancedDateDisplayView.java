@@ -1,8 +1,6 @@
 package com.gianlu.fidal;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,6 +11,9 @@ import com.gianlu.fidal.NetIO.Models.EventDate;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class AdvancedDateDisplayView extends LinearLayout {
     private final LinearLayout start;

@@ -3,13 +3,6 @@ package com.gianlu.fidal;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -25,6 +18,13 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity implements FidalApi.OnResult<List<Event>>, EventsAdapter.Listener {
     private RecyclerViewLayout layout;
@@ -62,31 +62,25 @@ public class MainActivity extends AppCompatActivity implements FidalApi.OnResult
         year.setNumberItems(FidalApi.yearsRange(), Calendar.getInstance().get(Calendar.YEAR));
         month.setOnItemSelectedListener(new CollateralItemSelectionListener<>(null));
         month.setItems(FidalApi.Month.list(), FidalApi.Month.now());
-        level.setOnItemSelectedListener(new CollateralItemSelectionListener<>(new LabeledSpinner.SelectListener<FidalApi.Level>() {
-            @Override
-            public void selected(@NonNull FidalApi.Level item) {
-                type.setItems(FidalApi.Type.list(item), FidalApi.Type.ANY);
-                if (item == FidalApi.Level.REGIONAL) region.setVisibility(View.VISIBLE);
-                else region.setVisibility(View.GONE);
-            }
+        level.setOnItemSelectedListener(new CollateralItemSelectionListener<>((LabeledSpinner.SelectListener<FidalApi.Level>) item -> {
+            type.setItems(FidalApi.Type.list(item), FidalApi.Type.ANY);
+            if (item == FidalApi.Level.REGIONAL) region.setVisibility(View.VISIBLE);
+            else region.setVisibility(View.GONE);
         }));
         level.setItems(FidalApi.Level.list(), FidalApi.Level.ANY);
         region.setOnItemSelectedListener(new CollateralItemSelectionListener<>(null));
         region.setItems(FidalApi.Region.list(), FidalApi.Region.ANY);
         region.setVisibility(View.GONE);
-        type.setOnItemSelectedListener(new CollateralItemSelectionListener<>(new LabeledSpinner.SelectListener<FidalApi.Type>() {
-            @Override
-            public void selected(@NonNull FidalApi.Type item) {
-                if (item.hasApproval()) {
-                    approval.setVisibility(View.VISIBLE);
-                    approvalType.setVisibility(View.VISIBLE);
-                } else {
-                    approval.setVisibility(View.GONE);
-                    approvalType.setVisibility(View.GONE);
-                }
+        type.setOnItemSelectedListener(new CollateralItemSelectionListener<>((LabeledSpinner.SelectListener<FidalApi.Type>) item -> {
+            if (item.hasApproval()) {
+                approval.setVisibility(View.VISIBLE);
+                approvalType.setVisibility(View.VISIBLE);
+            } else {
+                approval.setVisibility(View.GONE);
+                approvalType.setVisibility(View.GONE);
             }
         }));
-        type.setItems(FidalApi.Type.list((FidalApi.Level) level.getSelectedItem()), FidalApi.Type.ANY);
+        type.setItems(FidalApi.Type.list(level.getSelectedItem()), FidalApi.Type.ANY);
         category.setOnItemSelectedListener(new CollateralItemSelectionListener<>(null));
         category.setItems(FidalApi.Category.list(), FidalApi.Category.ANY);
         federalChampionship.setOnCheckedChangeListener(new CollateralItemSelectionListener<>(null));
@@ -170,10 +164,10 @@ public class MainActivity extends AppCompatActivity implements FidalApi.OnResult
 
     private void somethingChanged() {
         layout.startLoading();
-        api.getCalendar((Integer) year.getSelectedItem(), (FidalApi.Month) month.getSelectedItem(),
-                (FidalApi.Level) level.getSelectedItem(), (FidalApi.Region) region.getSelectedItem(), (FidalApi.Type) type.getSelectedItem(),
-                (FidalApi.Category) category.getSelectedItem(), federalChampionship.isChecked(),
-                (FidalApi.Approval) approval.getSelectedItem(), (FidalApi.ApprovalType) approvalType.getSelectedItem(), this);
+        api.getCalendar(year.getSelectedItem(), month.getSelectedItem(),
+                level.getSelectedItem(), region.getSelectedItem(), type.getSelectedItem(),
+                category.getSelectedItem(), federalChampionship.isChecked(),
+                approval.getSelectedItem(), approvalType.getSelectedItem(), this);
     }
 
     @Override
@@ -211,12 +205,7 @@ public class MainActivity extends AppCompatActivity implements FidalApi.OnResult
         }
 
         private void postChanged() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    somethingChanged();
-                }
-            });
+            runOnUiThread(MainActivity.this::somethingChanged);
         }
 
         @Override

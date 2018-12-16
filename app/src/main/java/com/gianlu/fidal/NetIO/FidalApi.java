@@ -3,10 +3,6 @@ package com.gianlu.fidal.NetIO;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.UiThread;
-import android.support.annotation.WorkerThread;
 
 import com.gianlu.commonutils.GetText;
 import com.gianlu.commonutils.Logging;
@@ -28,6 +24,10 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.UiThread;
+import androidx.annotation.WorkerThread;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -36,21 +36,13 @@ import okhttp3.ResponseBody;
 
 public class FidalApi {
     private static final HttpUrl CALENDAR_URL = HttpUrl.get("http://www.fidal.it/calendario.php");
-    private static final Processor<EventDetails> EVENT_DETAILS_PROCESSOR = new Processor<EventDetails>() {
-        @NonNull
-        @Override
-        public EventDetails process(@NonNull Document document) throws ParseException {
-            Element element = document.selectFirst("#content .section .text-holder");
-            return new EventDetails(element);
-        }
+    private static final Processor<EventDetails> EVENT_DETAILS_PROCESSOR = document -> {
+        Element element = document.selectFirst("#content .section .text-holder");
+        return new EventDetails(element);
     };
-    private static final Processor<AthleteDetails> ATHLETE_DETAILS_PROCESSOR = new Processor<AthleteDetails>() {
-        @NonNull
-        @Override
-        public AthleteDetails process(@NonNull Document document) throws ParseException {
-            Element element = document.selectFirst("#content .section .text-holder");
-            return new AthleteDetails(element);
-        }
+    private static final Processor<AthleteDetails> ATHLETE_DETAILS_PROCESSOR = document -> {
+        Element element = document.selectFirst("#content .section .text-holder");
+        return new AthleteDetails(element);
     };
     private static FidalApi instance;
     private final OkHttpClient client;
@@ -658,21 +650,11 @@ public class FidalApi {
                 Document document = requestSync(url);
                 if (!aborted) {
                     final A result = processor.process(document);
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.result(result);
-                        }
-                    });
+                    handler.post(() -> listener.result(result));
                 }
             } catch (IOException | ParseException ex) {
                 if (!aborted) {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.exception(ex);
-                        }
-                    });
+                    handler.post(() -> listener.exception(ex));
                 }
             }
         }

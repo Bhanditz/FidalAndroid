@@ -1,8 +1,9 @@
 package com.gianlu.fidal.NetIO.Models.Competitions;
 
-import android.support.annotation.NonNull;
 
 import com.gianlu.fidal.NetIO.FidalApi;
+
+import androidx.annotation.NonNull;
 
 public abstract class AbsCompetition {
 

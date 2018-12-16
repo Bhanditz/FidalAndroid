@@ -1,14 +1,15 @@
 package com.gianlu.fidal.NetIO.Models;
 
 import android.content.Context;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
 
 import com.gianlu.commonutils.GetText;
 import com.gianlu.fidal.NetIO.FidalApi;
 import com.gianlu.fidal.R;
 
 import org.jsoup.nodes.Element;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 
 public class Event {
     public final EventDate date;

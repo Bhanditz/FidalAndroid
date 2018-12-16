@@ -1,11 +1,11 @@
 package com.gianlu.fidal.NetIO.Models;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import com.gianlu.fidal.NetIO.FidalApi;
 
 import org.jsoup.nodes.Element;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class PageLink {
     public final String url;

@@ -1,8 +1,5 @@
 package com.gianlu.fidal.NetIO.Models;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import com.gianlu.fidal.NetIO.FidalApi;
 
 import org.jetbrains.annotations.Contract;
@@ -12,6 +9,9 @@ import org.jsoup.nodes.TextNode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class EventDetails {
     public final String title;
