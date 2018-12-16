@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class AdvancedDateDisplayView extends LinearLayout {
-    private final LinearLayout start;
     private final TextView startDay;
     private final TextView startDayName;
     private final TextView range;
@@ -37,7 +36,6 @@ public class AdvancedDateDisplayView extends LinearLayout {
 
         View.inflate(context, R.layout.view_advanced_date_display, this);
 
-        start = findViewById(R.id.advancedDateDisplay_start);
         startDay = findViewById(R.id.advancedDateDisplay_startDay);
         startDayName = findViewById(R.id.advancedDateDisplay_startDayName);
         range = findViewById(R.id.advancedDateDisplay_range);

@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 
 public class EventBottomSheet extends ThemedModalBottomSheet<Event, EventDetails> {
     private AdvancedDateDisplayView date;
+    private HorizontalBadges badges;
 
     @Override
     protected boolean onCreateHeader(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent, @NonNull Event payload) {
@@ -46,6 +47,7 @@ public class EventBottomSheet extends ThemedModalBottomSheet<Event, EventDetails
         inflater.inflate(R.layout.sheet_event_details, parent, true);
 
         date = parent.findViewById(R.id.eventDetailsSheet_date);
+        badges = parent.findViewById(R.id.eventDetailsSheet_badges);
 
         isLoading(true);
         FidalApi.get().getEvent(payload, new FidalApi.OnResult<EventDetails>() {
@@ -67,6 +69,22 @@ public class EventBottomSheet extends ThemedModalBottomSheet<Event, EventDetails
         isLoading(false);
 
         date.setDate(payload.date);
+
+        badges.add(payload.type.getIcon(), payload.type.getText(requireContext()));
+        badges.add(payload.level.getIcon(), payload.level.getText(requireContext()));
+        badges.add(R.drawable.map, payload.place);
+
+        switch (payload.sex) {
+            case M:
+                badges.add(R.drawable.male, R.string.male);
+                break;
+            case F:
+                badges.add(R.drawable.female, R.string.female);
+                break;
+            case ANY:
+                badges.add(R.drawable.male_and_female, R.string.maleAndFemale);
+                break;
+        }
     }
 
     @Override

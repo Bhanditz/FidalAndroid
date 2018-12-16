@@ -78,4 +78,7 @@
     <string name="level_international">International</string>
     <string name="level_regionalOpen">Regional open</string>
     <string name="failedOpeningUrl">Failed opening this page!</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="maleAndFemale">Male and female</string>
 </resources>

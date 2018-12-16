@@ -4,10 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gianlu.commonutils.FontsManager;
+import com.gianlu.fidal.HorizontalBadges;
 import com.gianlu.fidal.NetIO.Models.Event;
 import com.gianlu.fidal.R;
 
@@ -42,13 +42,10 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
         holder.date.setText(event.date.toReadableShort());
 
-        holder.type.setText(event.type.getText(context));
-        holder.typeIcon.setImageResource(event.type.getIcon());
-
-        holder.level.setText(event.level.getText(context));
-        holder.levelIcon.setImageResource(event.level.getIcon());
-
-        holder.place.setText(event.place);
+        holder.badges.clear();
+        holder.badges.add(event.type.getIcon(), event.type.getText(context));
+        holder.badges.add(event.level.getIcon(), event.level.getText(context));
+        holder.badges.add(R.drawable.map, event.place);
 
         if (event.desc.isEmpty()) {
             holder.desc.setVisibility(View.GONE);
@@ -57,11 +54,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             holder.desc.setText(event.desc);
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) listener.selected(event);
-            }
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) listener.selected(event);
         });
     }
 
@@ -78,23 +72,15 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         final TextView date;
         final TextView name;
         final TextView desc;
-        final TextView type;
-        final ImageView typeIcon;
-        final TextView level;
-        final ImageView levelIcon;
-        final TextView place;
+        final HorizontalBadges badges;
 
         ViewHolder(@NonNull ViewGroup parent) {
             super(inflater.inflate(R.layout.item_event, parent, false));
 
             name = itemView.findViewById(R.id.eventItem_name);
             desc = itemView.findViewById(R.id.eventItem_desc);
-            type = itemView.findViewById(R.id.eventItem_type);
-            typeIcon = itemView.findViewById(R.id.eventItem_typeIcon);
-            level = itemView.findViewById(R.id.eventItem_level);
-            levelIcon = itemView.findViewById(R.id.eventItem_levelIcon);
             date = itemView.findViewById(R.id.eventItem_date);
-            place = itemView.findViewById(R.id.eventItem_place);
+            badges = itemView.findViewById(R.id.eventItem_badges);
 
             FontsManager.set(date, FontsManager.ROBOTO_LIGHT);
             FontsManager.set(desc, FontsManager.ROBOTO_LIGHT);

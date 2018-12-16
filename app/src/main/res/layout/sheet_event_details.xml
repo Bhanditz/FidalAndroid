@@ -5,9 +5,13 @@
     android:orientation="vertical"
     android:padding="8dp">
 
+    <com.gianlu.fidal.HorizontalBadges
+        android:id="@+id/eventDetailsSheet_badges"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <com.gianlu.fidal.AdvancedDateDisplayView
         android:id="@+id/eventDetailsSheet_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
 </LinearLayout>

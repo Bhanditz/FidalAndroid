@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements FidalApi.OnResult
         somethingChanged();
     }
 
-    private void setInputFromUrl(Uri url) throws FidalApi.ParseException {
+    private void setInputFromUrl(@NonNull Uri url) throws FidalApi.ParseException {
         String yearStr = url.getQueryParameter("anno");
         if (yearStr != null && yearStr.isEmpty()) {
             try {
