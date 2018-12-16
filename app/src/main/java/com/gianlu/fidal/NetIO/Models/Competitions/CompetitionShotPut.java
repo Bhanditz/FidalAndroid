@@ -8,6 +8,6 @@ public final class CompetitionShotPut extends AbsCompetition {
     }
 
     public enum Weight {
-        GR2000, GR4000, GR5000, GR7260
+        GR2000, GR3000, GR4000, GR5000, GR7260
     }
 }

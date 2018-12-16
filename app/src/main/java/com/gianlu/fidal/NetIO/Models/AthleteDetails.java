@@ -21,7 +21,7 @@ public class AthleteDetails {
     public final String name;
     public final PageLink club;
     public final long dateOfBirth;
-    public final String membershipDetails; // TODO
+    public final String membershipDetails;
     public final Map<AbsCompetition, CompetitionResults> results;
     public final List<CompetitionRecord> records;
     public final List<HistoryItem> history;

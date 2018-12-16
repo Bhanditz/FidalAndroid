@@ -542,9 +542,9 @@ public class FidalApi {
                 return PROMESSE;
             } else if (str.contains("Juniores")) {
                 return JUNIORES;
-            } else if (str.contains("Allievi")) {
+            } else if (str.contains("Allievi") || str.contains("Allieve")) {
                 return ALLIEVI;
-            } else if (str.contains("Cadetti")) {
+            } else if (str.contains("Cadetti") || str.contains("Cadette")) {
                 return CADETTI;
             } else if (str.contains("Ragazzi")) {
                 return RAGAZZI;

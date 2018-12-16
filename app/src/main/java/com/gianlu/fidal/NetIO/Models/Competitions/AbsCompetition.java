@@ -95,6 +95,8 @@ public abstract class AbsCompetition {
                 return new CompetitionVerticalJump(CompetitionVerticalJump.Type.HIGH_JUMP);
             case "PESO/SP KG 2.000":
                 return new CompetitionShotPut(CompetitionShotPut.Weight.GR2000);
+            case "PESO/SP KG 3.000":
+                return new CompetitionShotPut(CompetitionShotPut.Weight.GR3000);
             case "PESO/SP KG 4.000":
                 return new CompetitionShotPut(CompetitionShotPut.Weight.GR4000);
             case "PESO/SP KG 5.000":
@@ -117,8 +119,22 @@ public abstract class AbsCompetition {
                 return new CompetitionJavelinThrow(CompetitionJavelinThrow.Weight.GR600);
             case "MARTELLO/HT KG 3.000":
                 return new CompetitionHammerThrow(CompetitionHammerThrow.Weight.GR3000);
+            case "MARTELLO/HT KG 4.000":
+                return new CompetitionHammerThrow(CompetitionHammerThrow.Weight.GR4000);
+            case "MARTELLO/HT KG 5.000":
+                return new CompetitionHammerThrow(CompetitionHammerThrow.Weight.GR5000);
+            case "MARTELLO/HT KG 7.260":
+                return new CompetitionHammerThrow(CompetitionHammerThrow.Weight.GR7260);
             case "VORTEX":
                 return new CompetitionVortex();
+            case "TETRATHLON":
+                return new CompetitionTetrathlon();
+            case "PENTATHLON CADETTE":
+                return new CompetitionPentathlon();
+            case "EPTATHLON":
+                return new CompetitionEptathlon();
+            case "DECATHLON":
+                return new CompetitionDecathlon();
             default:
                 throw new FidalApi.ParseException("Unknown competition type: " + title);
         }
