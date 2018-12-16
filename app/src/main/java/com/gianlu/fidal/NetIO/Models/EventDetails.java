@@ -151,7 +151,7 @@ public class EventDetails {
                 String text = node.text().trim();
                 if (text.isEmpty()) continue;
 
-                list.add(FidalApi.Category.parseCategory(text.substring(0, 3)));
+                list.add(FidalApi.Category.parse(text.substring(0, 3)));
             }
         }
     }

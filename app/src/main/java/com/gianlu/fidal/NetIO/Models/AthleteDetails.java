@@ -24,6 +24,7 @@ public class AthleteDetails {
     public final String membershipDetails; // TODO
     public final Map<AbsCompetition, CompetitionResults> results;
     public final List<CompetitionRecord> records;
+    public final List<HistoryItem> history;
 
     public AthleteDetails(Element element) throws FidalApi.ParseException {
         Element common = element.child(1).child(0);
@@ -40,9 +41,18 @@ public class AthleteDetails {
         records = parseRecords(tab3);
 
         Element tab6 = element.selectFirst("#tab6 .tab-holder"); // History
-        // TODO: History
+        history = parseHistory(tab6);
     }
 
+    @NonNull
+    private static List<HistoryItem> parseHistory(@NonNull Element tab) throws FidalApi.ParseException {
+        List<HistoryItem> history = new ArrayList<>();
+        Elements table = tab.select("table tbody tr");
+        for (Element row : table) history.add(new HistoryItem(row));
+        return history;
+    }
+
+    @NonNull
     private static List<CompetitionRecord> parseRecords(@NonNull Element tab) throws FidalApi.ParseException {
         List<CompetitionRecord> list = new ArrayList<>();
         Element notWindy = tab.getElementsContainingOwnText("Non ventosi").first().nextElementSibling();
@@ -84,6 +94,38 @@ public class AthleteDetails {
             return new SimpleDateFormat("dd-MM-yyyy").parse(text).getTime();
         } catch (ParseException ex) {
             throw new FidalApi.ParseException(ex);
+        }
+    }
+
+    public static class HistoryItem {
+        public final int year;
+        public final Reason reason;
+        public final FidalApi.Category category;
+        public final PageLink club;
+
+        HistoryItem(@NonNull Element element) throws FidalApi.ParseException {
+            year = Integer.parseInt(element.child(0).text());
+            reason = Reason.parse(element.child(1).text());
+            category = FidalApi.Category.parseLong(element.child(2).text());
+            club = PageLink.extract(element.child(3).child(0));
+        }
+
+        public enum Reason {
+            NEW, RENEWAL, TRANSFER;
+
+            @NonNull
+            public static Reason parse(@NonNull String str) throws FidalApi.ParseException {
+                switch (str) {
+                    case "Trasferimento":
+                        return TRANSFER;
+                    case "Rinnovo":
+                        return RENEWAL;
+                    case "Nuovo":
+                        return NEW;
+                    default:
+                        throw new FidalApi.ParseException("Unknown reason: " + str);
+                }
+            }
         }
     }
 }

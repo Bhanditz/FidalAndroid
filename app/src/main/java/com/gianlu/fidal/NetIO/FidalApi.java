@@ -381,7 +381,7 @@ public class FidalApi {
     public enum Type implements GetText {
         ANY(0), CROSS(2), INDOOR(3), PISTA_REGIONAL(5), MARCIA_STRADA(8), MONTAGNA(11),
         MONTAGNA_TRAIL(4), NORDIC_WALKING(13), OUTDOOR(5), PIAZZA_ALTRO(10), STRADA(6),
-        TRAIL(12), ULTRAMARATONA(7), ULTRAMARATONA_TRAIL(9), MONTAGNA_REGIONAL(4), TRAIL_REGIONAL(7),;
+        TRAIL(12), ULTRAMARATONA(7), ULTRAMARATONA_TRAIL(9), MONTAGNA_REGIONAL(4), TRAIL_REGIONAL(7);
 
         public final int val;
 
@@ -528,14 +528,6 @@ public class FidalApi {
         }
 
         @NonNull
-        public static Category parseCategory(@NonNull String val) throws ParseException {
-            for (Category cat : values())
-                if (cat.val.equals(val)) return cat;
-
-            throw new ParseException("Unknown category: " + val);
-        }
-
-        @NonNull
         public static Category parse(@NonNull String str) throws ParseException {
             for (Category category : values())
                 if (category.val.equals(str))
@@ -545,7 +537,28 @@ public class FidalApi {
         }
 
         @NonNull
-        @Override
+        public static Category parseLong(@NonNull String str) throws ParseException {
+            if (str.contains("Promesse")) {
+                return PROMESSE;
+            } else if (str.contains("Juniores")) {
+                return JUNIORES;
+            } else if (str.contains("Allievi")) {
+                return ALLIEVI;
+            } else if (str.contains("Cadetti")) {
+                return CADETTI;
+            } else if (str.contains("Ragazzi")) {
+                return RAGAZZI;
+            } else if (str.contains("Seniores")) {
+                return SENIORES;
+            } else if (str.contains("Master")) {
+                return MASTER;
+            } else if (str.contains("Esordienti")) {
+                return ESORDIENTI;
+            } else {
+                throw new ParseException("Unknown category: " + str);
+            }
+        }
+
         public String getText(@NonNull Context context) {
             switch (this) {
                 case ANY:

@@ -13,8 +13,10 @@ public abstract class AbsCompetition {
         switch (title) {
             case "50 METRI":
                 return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M50);
+            case "60 METRI":
             case "60 PIANI":
                 return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M60);
+            case "80 METRI":
             case "80 PIANI":
                 return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M80);
             case "100 METRI":
@@ -23,6 +25,7 @@ public abstract class AbsCompetition {
                 return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M150);
             case "200 METRI":
                 return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M200);
+            case "300 METRI":
             case "300 PIANI":
                 return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M300);
             case "400 METRI":
