@@ -43,7 +43,7 @@ public class AthleteDetails {
         // TODO: History
     }
 
-    private static List<CompetitionRecord> parseRecords(@NonNull Element tab) {
+    private static List<CompetitionRecord> parseRecords(@NonNull Element tab) throws FidalApi.ParseException {
         List<CompetitionRecord> list = new ArrayList<>();
         Element notWindy = tab.getElementsContainingOwnText("Non ventosi").first().nextElementSibling();
         parseRecordsTable(notWindy, false, list);
@@ -54,7 +54,7 @@ public class AthleteDetails {
         return list;
     }
 
-    private static void parseRecordsTable(Element table, boolean windy, List<CompetitionRecord> list) {
+    private static void parseRecordsTable(Element table, boolean windy, List<CompetitionRecord> list) throws FidalApi.ParseException {
         for (Element row : table.select("table tbody tr"))
             list.add(new CompetitionRecord(row, windy));
     }

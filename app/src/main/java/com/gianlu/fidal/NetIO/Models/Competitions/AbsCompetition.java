@@ -12,23 +12,43 @@ public abstract class AbsCompetition {
         title = title.toUpperCase();
         switch (title) {
             case "50 METRI":
-                return new CompetitionSprint(AbsCompetitionWithDistance.Distance.M50);
+                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M50);
             case "60 PIANI":
-                return new CompetitionSprint(AbsCompetitionWithDistance.Distance.M60);
+                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M60);
             case "80 PIANI":
-                return new CompetitionSprint(AbsCompetitionWithDistance.Distance.M80);
+                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M80);
             case "100 METRI":
-                return new CompetitionSprint(AbsCompetitionWithDistance.Distance.M100);
+                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M100);
             case "150 METRI":
-                return new CompetitionSprint(AbsCompetitionWithDistance.Distance.M150);
+                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M150);
             case "200 METRI":
-                return new CompetitionSprint(AbsCompetitionWithDistance.Distance.M200);
+                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M200);
             case "300 PIANI":
-                return new CompetitionSprint(AbsCompetitionWithDistance.Distance.M300);
+                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M300);
             case "400 METRI":
-                return new CompetitionSprint(AbsCompetitionWithDistance.Distance.M400);
+                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M400);
             case "600 METRI":
-                return new CompetitionSprint(AbsCompetitionWithDistance.Distance.M600);
+                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M600);
+            case "800 METRI":
+                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M800);
+            case "1000 METRI":
+                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M1000);
+            case "2000 METRI":
+                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M2000);
+            case "MARCIA 1000M":
+                return new CompetitionMarch(AbsCompetitionWithDistance.Distance.M1000, false);
+            case "MARCIA 2000M":
+                return new CompetitionMarch(AbsCompetitionWithDistance.Distance.KM2, false);
+            case "MARCIA 3000M":
+                return new CompetitionMarch(AbsCompetitionWithDistance.Distance.KM3, false);
+            case "MARCIA 4000M":
+                return new CompetitionMarch(AbsCompetitionWithDistance.Distance.KM4, false);
+            case "MARCIA 5000M":
+                return new CompetitionMarch(AbsCompetitionWithDistance.Distance.KM5, false);
+            case "MARCIA 10000M":
+                return new CompetitionMarch(AbsCompetitionWithDistance.Distance.KM10, false);
+            case "MARCIA STRADA KM 10":
+                return new CompetitionMarch(AbsCompetitionWithDistance.Distance.KM10, true);
             case "50 HS H76 AF":
                 return new CompetitionHurdles(AbsCompetitionWithDistance.Distance.M50, CompetitionHurdles.Height.H76);
             case "60 HS- 5 HS H 60":
