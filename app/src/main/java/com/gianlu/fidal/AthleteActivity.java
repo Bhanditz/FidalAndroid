@@ -14,7 +14,7 @@ public class AthleteActivity extends ActivityWithDialog {
         setContentView(R.layout.activity_athlete);
 
         ParabolicAnimationView anim = findViewById(R.id.athlete_anim);
-        anim.setPadding(56, 96, 16, 300);
-        new Handler().postDelayed(() -> anim.startAnimation(45), 2000);
+        anim.setPadding(32, 32, 32, 32);
+        new Handler().postDelayed(() -> anim.startAnimation(53, 45), 2000);
     }
 }

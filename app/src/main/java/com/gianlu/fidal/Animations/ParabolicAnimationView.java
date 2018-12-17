@@ -41,6 +41,7 @@ public class ParabolicAnimationView extends View {
     private int paddingLeft;
     private int paddingTop;
     private int paddingBottom;
+    private float maxY;
 
     public ParabolicAnimationView(Context context) {
         this(context, null, 0);
@@ -85,11 +86,18 @@ public class ParabolicAnimationView extends View {
         return Math.tan(alpha);
     }
 
+    private static double getMaxY(float a, float alpha, float v0) {
+        return -Math.pow(v0, 2) * Math.pow(Math.sin(alpha), 2) / (a * 2);
+    }
+
     public void setPadding(@Px int top, @Px int right, @Px int bottom, @Px int left) {
         paddingTop = top;
         paddingRight = right;
         paddingBottom = bottom;
         paddingLeft = left;
+
+        requestLayout();
+        invalidateOutline();
     }
 
     private void getBezierQuadControl(float a, float b) {
@@ -107,12 +115,13 @@ public class ParabolicAnimationView extends View {
         bezierCubicControl2.y = bezierQuadControl.y * 2f / 3f + bezierEnd.y / 3f;
     }
 
-    public void startAnimation(float dist) {
+    public void startAnimation(float dist, float degrees) {
         resetAnimation();
 
         factor = (getWidth() - paddingLeft - paddingRight) / dist;
-        angle = (float) (Math.PI / 3);
+        angle = (float) (Math.toRadians(degrees));
         v0 = (float) calcV0(dist, angle, G);
+        maxY = (float) getMaxY(G, angle, v0);
         equationA = (float) getEquationA(G, v0, angle);
         equationB = (float) getEquationB(angle);
         float time = (float) calcTime(dist, angle, G);
@@ -135,6 +144,18 @@ public class ParabolicAnimationView extends View {
         });
 
         animator.start();
+        requestLayout();
+        invalidateOutline();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (maxY > 0) {
+            super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.AT_MOST),
+                    MeasureSpec.makeMeasureSpec((int) (maxY * factor + paddingTop + paddingBottom), MeasureSpec.EXACTLY));
+        } else {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
     }
 
     public void resetAnimation() {
@@ -146,15 +167,15 @@ public class ParabolicAnimationView extends View {
     }
 
     private void drawByPoint(@NonNull Canvas canvas) {
-        path.addCircle(bezierStart.x * factor + paddingLeft, bezierStart.y * factor + paddingTop, STROKE_WIDTH / 2, Path.Direction.CW);
+        path.addCircle(bezierStart.x * factor + paddingLeft, bezierStart.y * factor + paddingBottom, STROKE_WIDTH / 2, Path.Direction.CW);
         canvas.drawPath(path, pointsPaint);
     }
 
     private void drawBezier(@NonNull Canvas canvas) {
         bezierStart.x = 0;
-        bezierStart.y = 0;
+        bezierStart.y = paddingBottom - paddingTop;
         bezierEnd.x = getWidth() - paddingLeft - paddingRight;
-        bezierEnd.y = 0;
+        bezierEnd.y = paddingBottom - paddingTop;
 
         canvas.save();
         canvas.translate(paddingLeft, paddingTop);
@@ -170,7 +191,10 @@ public class ParabolicAnimationView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        canvas.save();
+        canvas.scale(1, -1, getWidth() / 2f, getHeight() / 2f);
         if (completed) drawBezier(canvas);
         else drawByPoint(canvas);
+        canvas.restore();
     }
 }
