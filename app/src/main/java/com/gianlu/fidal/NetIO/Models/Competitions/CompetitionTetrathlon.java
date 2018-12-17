@@ -1,4 +1,4 @@
 package com.gianlu.fidal.NetIO.Models.Competitions;
 
-public class CompetitionTetrathlon extends AbsCompetition {
+public final class CompetitionTetrathlon extends AbsCompetition {
 }
