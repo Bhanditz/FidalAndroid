@@ -1,10 +1,10 @@
 package com.gianlu.fidal;
 
 import android.os.Bundle;
-import android.os.Handler;
+import android.widget.LinearLayout;
 
 import com.gianlu.commonutils.Dialogs.ActivityWithDialog;
-import com.gianlu.fidal.Animations.ParabolicAnimationView;
+import com.gianlu.fidal.Animations.HorizontalParabolicAnimationView;
 
 public class AthleteActivity extends ActivityWithDialog {
 
@@ -13,8 +13,11 @@ public class AthleteActivity extends ActivityWithDialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_athlete);
 
-        ParabolicAnimationView anim = findViewById(R.id.athlete_anim);
+        LinearLayout athlete = findViewById(R.id.athlete);
+        HorizontalParabolicAnimationView anim = new HorizontalParabolicAnimationView(this);
         anim.setPadding(32, 32, 32, 32);
-        new Handler().postDelayed(() -> anim.startAnimation(53, 45), 2000);
+        athlete.addView(anim);
+        anim.prepareAnimation(53, 45);
+        anim.startAnimation();
     }
 }

@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 public class RawCompetitionResult {
     public final long date;
 
-    public RawCompetitionResult(Element row) throws FidalApi.ParseException {
+    public RawCompetitionResult(Element row) throws FidalApi.ParseException { // TODO
         date = parseDate(row.child(0).text(), row.child(1).text());
         row.child(2); // Type
         row.child(3); // Chrono

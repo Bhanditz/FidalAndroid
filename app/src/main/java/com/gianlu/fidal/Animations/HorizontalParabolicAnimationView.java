@@ -9,29 +9,36 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.util.AttributeSet;
-import android.view.View;
+import android.graphics.Rect;
+import android.util.TypedValue;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
+import java.util.Locale;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.Px;
 import androidx.annotation.UiThread;
 
 @UiThread
-public class ParabolicAnimationView extends View {
+public class HorizontalParabolicAnimationView extends AbsCompetitionAnimationView {
     private static final float G = -9.764f;
-    private static final float STROKE_WIDTH = 16;
-    private static final float SLOWDOWN_FACTOR = 3;
+    private static final float SLOWDOWN_FACTOR = 2.5f;
+    private static final float DISTANCE_PARABOLA_PADDING = 32;
+    private static final float TEXT_DISTANCE_PADDING = 16;
+    private static final int DISTANCE_TEXT_SIZE = 32;
+    private final float mStrokeWidth;
     private final Paint pointsPaint;
     private final Paint bezierPaint;
+    private final Paint distancePaint;
+    private final Paint distanceTextPaint;
     private final Path path = new Path();
+    private final PointF point = new PointF();
     private final PointF bezierStart = new PointF();
     private final PointF bezierEnd = new PointF();
     private final PointF bezierQuadControl = new PointF();
     private final PointF bezierCubicControl1 = new PointF();
     private final PointF bezierCubicControl2 = new PointF();
-    private float factor;
+    private final Rect textBounds = new Rect();
     private float equationA;
     private float equationB;
     private boolean completed = false;
@@ -42,28 +49,33 @@ public class ParabolicAnimationView extends View {
     private int paddingTop;
     private int paddingBottom;
     private float maxY;
+    private ValueAnimator currentAnimator;
+    private float dist;
+    private float factor;
 
-    public ParabolicAnimationView(Context context) {
-        this(context, null, 0);
-    }
-
-    public ParabolicAnimationView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public ParabolicAnimationView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-
+    public HorizontalParabolicAnimationView(@NonNull Context context) {
+        super(context);
         setWillNotDraw(false);
+
+        mStrokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
 
         pointsPaint = new Paint();
         pointsPaint.setColor(Color.RED);
 
         bezierPaint = new Paint();
         bezierPaint.setColor(Color.RED);
-        bezierPaint.setStrokeWidth(STROKE_WIDTH);
+        bezierPaint.setStrokeWidth(mStrokeWidth);
         bezierPaint.setStrokeCap(Paint.Cap.ROUND);
         bezierPaint.setStyle(Paint.Style.STROKE);
+
+        distancePaint = new Paint();
+        distancePaint.setColor(Color.LTGRAY);
+        distancePaint.setStrokeCap(Paint.Cap.ROUND);
+        distancePaint.setStrokeWidth(mStrokeWidth);
+
+        distanceTextPaint = new Paint();
+        distanceTextPaint.setColor(Color.LTGRAY);
+        distanceTextPaint.setTextSize(DISTANCE_TEXT_SIZE);
     }
 
     private static double calcTrajectory(float x, float alpha, float a, float v0) {
@@ -115,27 +127,33 @@ public class ParabolicAnimationView extends View {
         bezierCubicControl2.y = bezierQuadControl.y * 2f / 3f + bezierEnd.y / 3f;
     }
 
-    public void startAnimation(float dist, float degrees) {
+    private void calcFactor() {
+        factor = (getMeasuredWidth() - paddingLeft - paddingRight) / dist;
+    }
+
+    public void prepareAnimation(float dist, float degrees) {
         resetAnimation();
 
-        factor = (getWidth() - paddingLeft - paddingRight) / dist;
-        angle = (float) (Math.toRadians(degrees));
+        this.dist = dist;
+        calcFactor();
+
+        angle = (float) Math.toRadians(degrees);
         v0 = (float) calcV0(dist, angle, G);
         maxY = (float) getMaxY(G, angle, v0);
         equationA = (float) getEquationA(G, v0, angle);
         equationB = (float) getEquationB(angle);
         float time = (float) calcTime(dist, angle, G);
 
-        ValueAnimator animator = new ValueAnimator();
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.setFloatValues(0, 1);
-        animator.setDuration((long) (time * 1000f * SLOWDOWN_FACTOR));
-        animator.addUpdateListener(animation -> {
-            bezierStart.x = (float) animation.getAnimatedValue() * dist;
-            bezierStart.y = (float) calcTrajectory(bezierStart.x, angle, G, v0);
+        currentAnimator = new ValueAnimator();
+        currentAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        currentAnimator.setFloatValues(0, 1);
+        currentAnimator.setDuration((long) (time * 1000f * SLOWDOWN_FACTOR));
+        currentAnimator.addUpdateListener(animation -> {
+            point.x = (float) animation.getAnimatedValue() * dist;
+            point.y = (float) calcTrajectory(point.x, angle, G, v0);
             invalidate();
         });
-        animator.addListener(new AnimatorListenerAdapter() {
+        currentAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 completed = true;
@@ -143,16 +161,23 @@ public class ParabolicAnimationView extends View {
             }
         });
 
-        animator.start();
         requestLayout();
         invalidateOutline();
+    }
+
+    public void startAnimation() {
+        if (currentAnimator != null) currentAnimator.start();
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (maxY > 0) {
+            distanceTextPaint.getTextBounds("1", 0, 1, textBounds);
+
+            calcFactor();
+
             super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.AT_MOST),
-                    MeasureSpec.makeMeasureSpec((int) (maxY * factor + paddingTop + paddingBottom), MeasureSpec.EXACTLY));
+                    MeasureSpec.makeMeasureSpec((int) (maxY * factor + paddingTop + paddingBottom + DISTANCE_PARABOLA_PADDING + TEXT_DISTANCE_PADDING + textBounds.height()), MeasureSpec.EXACTLY));
         } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
@@ -167,7 +192,7 @@ public class ParabolicAnimationView extends View {
     }
 
     private void drawByPoint(@NonNull Canvas canvas) {
-        path.addCircle(bezierStart.x * factor + paddingLeft, bezierStart.y * factor + paddingBottom, STROKE_WIDTH / 2, Path.Direction.CW);
+        path.addCircle(point.x * factor + paddingLeft, point.y * factor + paddingBottom + DISTANCE_PARABOLA_PADDING + TEXT_DISTANCE_PADDING + textBounds.height(), mStrokeWidth / 2, Path.Direction.CW);
         canvas.drawPath(path, pointsPaint);
     }
 
@@ -178,7 +203,7 @@ public class ParabolicAnimationView extends View {
         bezierEnd.y = paddingBottom - paddingTop;
 
         canvas.save();
-        canvas.translate(paddingLeft, paddingTop);
+        canvas.translate(paddingLeft, paddingTop + DISTANCE_PARABOLA_PADDING + TEXT_DISTANCE_PADDING + textBounds.height());
 
         getBezierCubicControl(equationA, equationB);
 
@@ -189,8 +214,22 @@ public class ParabolicAnimationView extends View {
         canvas.restore();
     }
 
+    private void drawDistance(@NonNull Canvas canvas) {
+        String str = String.format(Locale.getDefault(), "%.2f", point.x);
+
+        distanceTextPaint.getTextBounds(str, 0, str.length(), textBounds);
+        canvas.drawText(str, paddingLeft + point.x * factor - textBounds.width() / 2f, getHeight() - paddingBottom, distanceTextPaint);
+
+        float distanceBarY = getHeight() - paddingBottom - textBounds.height() - TEXT_DISTANCE_PADDING;
+        canvas.drawLine(paddingLeft, distanceBarY, paddingLeft + point.x * factor, distanceBarY, distancePaint);
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
+        calcFactor();
+
+        drawDistance(canvas);
+
         canvas.save();
         canvas.scale(1, -1, getWidth() / 2f, getHeight() / 2f);
         if (completed) drawBezier(canvas);
