@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-public class TrackTimeAnimationView extends AbsCompetitionAnimationView {
+public class TrackTimeAnimationView extends AbsCompetitionAnimationView { // TODO
     public TrackTimeAnimationView(@NonNull Context context) {
         super(context);
     }

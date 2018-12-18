@@ -37,6 +37,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".AthleteActivity" />
+        <activity
+            android:name=".AthleteActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 </manifest>

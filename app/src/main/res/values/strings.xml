@@ -81,4 +81,8 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="maleAndFemale">Male and female</string>
+    <string name="fidalSuffix" translatable="false">%s - FIDAL</string>
+    <string name="history">History</string>
+    <string name="records">Records</string>
+    <string name="results">Results</string>
 </resources>
