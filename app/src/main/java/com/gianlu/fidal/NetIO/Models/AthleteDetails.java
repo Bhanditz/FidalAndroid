@@ -31,7 +31,9 @@ public class AthleteDetails {
 
         name = common.child(0).text();
         club = PageLink.extract(common.child(1).child(0));
-        dateOfBirth = parseBirth(common.textNodes().get(3).text());
+
+        String birthStr = common.textNodes().get(3).text().trim();
+        dateOfBirth = birthStr.isEmpty() ? 0 : parseBirth(birthStr);
         membershipDetails = common.child(6).text();
 
         Element tab2 = element.selectFirst("#tab2 .tab-holder"); // Results

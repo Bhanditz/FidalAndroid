@@ -559,6 +559,39 @@ public class FidalApi {
             }
         }
 
+        @NonNull
+        public static Category parseTwoLetters(@NonNull String str) throws ParseException {
+            switch (str) {
+                case "CM":
+                case "CF":
+                    return CADETTI;
+                case "RM":
+                case "RF":
+                    return RAGAZZI;
+                case "AM":
+                case "AF":
+                    return ALLIEVI;
+                case "PM":
+                case "PF":
+                    return PROMESSE;
+                case "JM":
+                case "JF":
+                    return JUNIORES;
+                case "SM45":
+                case "SM40":
+                case "SF45":
+                case "SF40":
+                case "SM":
+                case "SF":
+                    return SENIORES;
+                case "MM40":
+                case "MF40":
+                    return MASTER;
+                default:
+                    throw new ParseException("Unknown category: " + str);
+            }
+        }
+
         public String getText(@NonNull Context context) {
             switch (this) {
                 case ANY:
