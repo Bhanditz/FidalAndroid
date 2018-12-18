@@ -1,13 +1,17 @@
 package com.gianlu.fidal.NetIO.Models;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 
+import com.gianlu.commonutils.GetText;
 import com.gianlu.fidal.NetIO.FidalApi;
 import com.gianlu.fidal.NetIO.Models.Competitions.AbsCompetition;
+import com.gianlu.fidal.R;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,9 +26,9 @@ public class AthleteDetails {
     public final PageLink club;
     public final long dateOfBirth;
     public final String membershipDetails;
-    public final Map<AbsCompetition, CompetitionResults> results;
-    public final List<CompetitionRecord> records;
-    public final List<HistoryItem> history;
+    public final HashMap<AbsCompetition, CompetitionResults> results;
+    public final ArrayList<CompetitionRecord> records;
+    public final ArrayList<HistoryItem> history;
 
     public AthleteDetails(Element element) throws FidalApi.ParseException {
         Element common = element.child(1).child(0);
@@ -47,16 +51,16 @@ public class AthleteDetails {
     }
 
     @NonNull
-    private static List<HistoryItem> parseHistory(@NonNull Element tab) throws FidalApi.ParseException {
-        List<HistoryItem> history = new ArrayList<>();
+    private static ArrayList<HistoryItem> parseHistory(@NonNull Element tab) throws FidalApi.ParseException {
+        ArrayList<HistoryItem> history = new ArrayList<>();
         Elements table = tab.select("table tbody tr");
         for (Element row : table) history.add(new HistoryItem(row));
         return history;
     }
 
     @NonNull
-    private static List<CompetitionRecord> parseRecords(@NonNull Element tab) throws FidalApi.ParseException {
-        List<CompetitionRecord> list = new ArrayList<>();
+    private static ArrayList<CompetitionRecord> parseRecords(@NonNull Element tab) throws FidalApi.ParseException {
+        ArrayList<CompetitionRecord> list = new ArrayList<>();
         Element notWindy = tab.getElementsContainingOwnText("Non ventosi").first().nextElementSibling();
         parseRecordsTable(notWindy, false, list);
 
@@ -72,9 +76,9 @@ public class AthleteDetails {
     }
 
     @NonNull
-    private static Map<AbsCompetition, CompetitionResults> parseResults(@NonNull Element tab) throws FidalApi.ParseException {
+    private static HashMap<AbsCompetition, CompetitionResults> parseResults(@NonNull Element tab) throws FidalApi.ParseException {
         Elements children = tab.children();
-        Map<AbsCompetition, CompetitionResults> map = new HashMap<>(children.size() / 2);
+        HashMap<AbsCompetition, CompetitionResults> map = new HashMap<>(children.size() / 2);
         for (int i = 0; i < children.size() - 1; i += 2) {
             String title = children.get(i).text();
             Element table = children.get(i + 1);
@@ -99,7 +103,7 @@ public class AthleteDetails {
         }
     }
 
-    public static class HistoryItem {
+    public static class HistoryItem implements Serializable {
         public final int year;
         public final Reason reason;
         public final FidalApi.Category category;
@@ -112,7 +116,7 @@ public class AthleteDetails {
             club = PageLink.extract(element.child(3).child(0));
         }
 
-        public enum Reason {
+        public enum Reason implements GetText {
             NEW, RENEWAL, TRANSFER;
 
             @NonNull
@@ -126,6 +130,21 @@ public class AthleteDetails {
                         return NEW;
                     default:
                         throw new FidalApi.ParseException("Unknown reason: " + str);
+                }
+            }
+
+            @NonNull
+            @Override
+            public String getText(@NonNull Context context) {
+                switch (this) {
+                    case NEW:
+                        return context.getString(R.string.reasonNew);
+                    case RENEWAL:
+                        return context.getString(R.string.renewal);
+                    case TRANSFER:
+                        return context.getString(R.string.trasnfer);
+                    default:
+                        return context.getString(R.string.unknown);
                 }
             }
         }

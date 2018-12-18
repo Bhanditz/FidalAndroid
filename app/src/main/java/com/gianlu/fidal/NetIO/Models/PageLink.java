@@ -4,10 +4,12 @@ import com.gianlu.fidal.NetIO.FidalApi;
 
 import org.jsoup.nodes.Element;
 
+import java.io.Serializable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class PageLink {
+public class PageLink implements Serializable {
     public final String url;
     public final String text;
 

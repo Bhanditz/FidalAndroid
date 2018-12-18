@@ -1,8 +1,11 @@
 package com.gianlu.fidal.NetIO.Models.Competitions;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 
+import com.gianlu.commonutils.GetText;
 import com.gianlu.fidal.NetIO.FidalApi;
+import com.gianlu.fidal.R;
 import com.gianlu.fidal.Utils;
 
 import org.jsoup.nodes.Element;
@@ -63,7 +66,7 @@ public class RawCompetitionResult {
         }
     }
 
-    public enum Type {
+    public enum Type implements GetText {
         OUTDOOR, INDOOR, ROAD;
 
         @NonNull
@@ -91,6 +94,21 @@ public class RawCompetitionResult {
                     return ROAD;
                 default:
                     throw new FidalApi.ParseException("Unknown type: " + val);
+            }
+        }
+
+        @NonNull
+        @Override
+        public String getText(@NonNull Context context) {
+            switch (this) {
+                case OUTDOOR:
+                    return context.getString(R.string.type_outdoor);
+                case INDOOR:
+                    return context.getString(R.string.type_indoor);
+                case ROAD:
+                    return context.getString(R.string.type_road);
+                default:
+                    return context.getString(R.string.unknown);
             }
         }
     }

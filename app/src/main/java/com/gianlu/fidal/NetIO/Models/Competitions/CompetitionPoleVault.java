@@ -6,10 +6,10 @@ import com.gianlu.fidal.R;
 
 import androidx.annotation.NonNull;
 
-public final class CompetitionPentathlon extends AbsCompetitionForPoints {
+public final class CompetitionPoleVault extends AbsCompetitionForVertialHeight {
     @NonNull
     @Override
     public String getText(@NonNull Context context) {
-        return context.getString(R.string.competition_pentathlon);
+        return context.getString(R.string.competition_poleVault);
     }
 }

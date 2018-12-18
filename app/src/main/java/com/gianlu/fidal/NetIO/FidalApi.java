@@ -485,27 +485,27 @@ public class FidalApi {
                 case PISTA_REGIONAL:
                     return context.getString(R.string.type_track);
                 case MARCIA_STRADA:
-                    return context.getString(R.string.type_marciaStrada);
+                    return context.getString(R.string.type_marchRoad);
                 case MONTAGNA:
                 case MONTAGNA_REGIONAL:
-                    return context.getString(R.string.type_montagna);
+                    return context.getString(R.string.type_mountain);
                 case MONTAGNA_TRAIL:
-                    return context.getString(R.string.type_montagnaTrail);
+                    return context.getString(R.string.type_mountainTrail);
                 case NORDIC_WALKING:
                     return context.getString(R.string.type_nordicWalking);
                 case OUTDOOR:
                     return context.getString(R.string.type_outdoor);
                 case PIAZZA_ALTRO:
-                    return context.getString(R.string.type_piazzaAltro);
+                    return context.getString(R.string.type_squareMore);
                 case STRADA:
-                    return context.getString(R.string.type_strada);
+                    return context.getString(R.string.type_road);
                 case TRAIL_REGIONAL:
                 case TRAIL:
                     return context.getString(R.string.type_trail);
                 case ULTRAMARATONA:
-                    return context.getString(R.string.type_ultramaratona);
+                    return context.getString(R.string.type_ultramarathon);
                 case ULTRAMARATONA_TRAIL:
-                    return context.getString(R.string.type_ultramaratonaTrail);
+                    return context.getString(R.string.type_ultramarathonTrail);
                 default:
                     throw new IllegalArgumentException("Unknown type: " + this);
             }

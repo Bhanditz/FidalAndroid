@@ -102,9 +102,9 @@ public class AthleteActivity extends ActivityWithDialog implements FidalApi.OnRe
         membershipDetails.setText(result.membershipDetails);
 
         pager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(),
-                ResultsFragment.getInstance(this),
-                RecordsFragment.getInstance(this),
-                HistoryFragment.getInstance(this)));
+                ResultsFragment.getInstance(this, result.results),
+                RecordsFragment.getInstance(this, result.records),
+                HistoryFragment.getInstance(this, result.history)));
     }
 
     @Override

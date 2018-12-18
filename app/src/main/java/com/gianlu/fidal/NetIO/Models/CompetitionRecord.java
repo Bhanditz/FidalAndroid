@@ -7,7 +7,9 @@ import com.gianlu.fidal.Utils;
 
 import org.jsoup.nodes.Element;
 
-public class CompetitionRecord {
+import java.io.Serializable;
+
+public class CompetitionRecord implements Serializable {
     public final AbsCompetition competition;
     public final RawCompetitionResult.Type type;
     public final float performance;

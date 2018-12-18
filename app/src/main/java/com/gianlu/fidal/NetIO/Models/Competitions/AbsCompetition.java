@@ -3,12 +3,15 @@ package com.gianlu.fidal.NetIO.Models.Competitions;
 
 import android.content.Context;
 
+import com.gianlu.commonutils.GetText;
 import com.gianlu.fidal.Animations.AbsCompetitionAnimationView;
 import com.gianlu.fidal.NetIO.FidalApi;
 
+import java.io.Serializable;
+
 import androidx.annotation.NonNull;
 
-public abstract class AbsCompetition<V extends AbsCompetitionAnimationView> {
+public abstract class AbsCompetition<V extends AbsCompetitionAnimationView> implements Serializable, GetText {
 
     @NonNull
     public static AbsCompetition parse(@NonNull String title) throws FidalApi.ParseException { // TODO: Stuff is missing
@@ -93,9 +96,9 @@ public abstract class AbsCompetition<V extends AbsCompetitionAnimationView> {
             case "SALTO TRIPLO/TJ":
                 return new CompetitionHorizontalJump(CompetitionHorizontalJump.Type.TRIPLE_JUMP);
             case "SALTO CON L'ASTA/PV":
-                return new CompetitionVerticalJump(CompetitionVerticalJump.Type.POLE_VAULT);
+                return new CompetitionPoleVault();
             case "SALTO IN ALTO/HJ":
-                return new CompetitionVerticalJump(CompetitionVerticalJump.Type.HIGH_JUMP);
+                return new CompetitionHighJump();
             case "PESO/SP KG 2.000":
                 return new CompetitionShotPut(CompetitionShotPut.Weight.GR2000);
             case "PESO/SP KG 3.000":

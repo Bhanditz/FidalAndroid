@@ -33,16 +33,16 @@
     <string name="category_mas">Master</string>
     <string name="type_cross">Cross</string>
     <string name="type_indoor">Indoor</string>
-    <string name="type_marciaStrada">March/Road</string>
-    <string name="type_montagna">Mountain</string>
-    <string name="type_montagnaTrail">Mountain/Trail</string>
+    <string name="type_marchRoad">March/Road</string>
+    <string name="type_mountain">Mountain</string>
+    <string name="type_mountainTrail">Mountain/Trail</string>
     <string name="type_nordicWalking">Nordic walking</string>
     <string name="type_outdoor">Outdoor</string>
-    <string name="type_piazzaAltro">Square and more</string>
-    <string name="type_strada">Road</string>
+    <string name="type_squareMore">Square and more</string>
+    <string name="type_road">Road</string>
     <string name="type_trail">Trail</string>
-    <string name="type_ultramaratona">Ultramarathon</string>
-    <string name="type_ultramaratonaTrail">Ultramarathon/Trail</string>
+    <string name="type_ultramarathon">Ultramarathon</string>
+    <string name="type_ultramarathonTrail">Ultramarathon/Trail</string>
     <string name="region_abruzzo" translatable="false">Abruzzo</string>
     <string name="region_alto_adige" translatable="false">Alto adige</string>
     <string name="region_basilicata" translatable="false">Basilicata</string>
@@ -85,4 +85,22 @@
     <string name="history">History</string>
     <string name="records">Records</string>
     <string name="results">Results</string>
+    <string name="renewal">Renewal</string>
+    <string name="trasnfer">Transfer</string>
+    <string name="reasonNew">New</string>
+    <string name="competition_eptathlon" translatable="false">Eptathlon</string>
+    <string name="competition_vortex" translatable="false">Vortex</string>
+    <string name="competition_tetrathlon" translatable="false">Tetrathlon</string>
+    <string name="competition_pentathlon" translatable="false">Pentathlon</string>
+    <string name="competition_decathlon" translatable="false">Decathlon</string>
+    <string name="competition_discusThrow">Discus throw - %s</string>
+    <string name="competition_shotPut">Shot put - %s</string>
+    <string name="competition_hammerThrow">Hammer throw - %s</string>
+    <string name="competition_javelinThrow">Javelin throw - %s</string>
+    <string name="competition_highJump">High jump</string>
+    <string name="competition_poleVault">Pole vault</string>
+    <string name="competition_longJump">Long jump</string>
+    <string name="competition_tripleJump">Triple jump</string>
+    <string name="competition_march">March - %s</string>
+    <string name="competition_hurdles">Hurdles - %s - %s</string>
 </resources>
