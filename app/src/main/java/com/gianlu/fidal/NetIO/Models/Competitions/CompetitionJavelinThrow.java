@@ -1,9 +1,11 @@
 package com.gianlu.fidal.NetIO.Models.Competitions;
 
-public final class CompetitionJavelinThrow extends AbsCompetition {
+import androidx.annotation.NonNull;
+
+public final class CompetitionJavelinThrow extends AbsCompetitionForHorizontalDistance {
     public final Weight weight;
 
-    CompetitionJavelinThrow(Weight weight) {
+    CompetitionJavelinThrow(@NonNull Weight weight) {
         this.weight = weight;
     }
 

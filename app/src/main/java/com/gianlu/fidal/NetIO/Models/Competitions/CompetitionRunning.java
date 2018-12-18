@@ -1,8 +1,10 @@
 package com.gianlu.fidal.NetIO.Models.Competitions;
 
-public final class CompetitionRunning extends AbsCompetitionWithDistance {
+import androidx.annotation.NonNull;
 
-    CompetitionRunning(Distance distance) {
+public final class CompetitionRunning extends AbsCompetitionForTime {
+
+    CompetitionRunning(@NonNull Distance distance) {
         super(distance);
     }
 }

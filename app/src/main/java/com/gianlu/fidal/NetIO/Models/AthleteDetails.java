@@ -87,7 +87,7 @@ public class AthleteDetails {
     private static void parseCompetitionResults(String title, Element table, Map<AbsCompetition, CompetitionResults> map) throws FidalApi.ParseException {
         AbsCompetition type = AbsCompetition.parse(title);
         List<Element> rows = table.select(".table-responsive tbody tr");
-        map.put(type, new CompetitionResults(rows));
+        map.put(type, new CompetitionResults(rows, type));
     }
 
     @SuppressLint("SimpleDateFormat")

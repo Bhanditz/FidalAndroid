@@ -1,9 +1,11 @@
 package com.gianlu.fidal.NetIO.Models.Competitions;
 
-public final class CompetitionHammerThrow extends AbsCompetition {
+import androidx.annotation.NonNull;
+
+public final class CompetitionHammerThrow extends AbsCompetitionForHorizontalDistance {
     public final Weight weight;
 
-    CompetitionHammerThrow(Weight weight) {
+    CompetitionHammerThrow(@NonNull Weight weight) {
         this.weight = weight;
     }
 

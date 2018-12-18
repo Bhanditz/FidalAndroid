@@ -1,9 +1,11 @@
 package com.gianlu.fidal.NetIO.Models.Competitions;
 
-public final class CompetitionHurdles extends AbsCompetitionWithDistance {
+import androidx.annotation.NonNull;
+
+public final class CompetitionHurdles extends AbsCompetitionForTime {
     public final Height height;
 
-    CompetitionHurdles(Distance distance, Height height) {
+    CompetitionHurdles(@NonNull Distance distance, @NonNull Height height) {
         super(distance);
         this.height = height;
     }

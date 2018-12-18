@@ -1,90 +1,93 @@
 package com.gianlu.fidal.NetIO.Models.Competitions;
 
 
+import android.content.Context;
+
+import com.gianlu.fidal.Animations.AbsCompetitionAnimationView;
 import com.gianlu.fidal.NetIO.FidalApi;
 
 import androidx.annotation.NonNull;
 
-public abstract class AbsCompetition {
+public abstract class AbsCompetition<V extends AbsCompetitionAnimationView> {
 
     @NonNull
     public static AbsCompetition parse(@NonNull String title) throws FidalApi.ParseException { // TODO: Stuff is missing
         title = title.toUpperCase();
         switch (title) {
             case "50 METRI":
-                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M50);
+                return new CompetitionRunning(AbsCompetitionForTime.Distance.M50);
             case "60 METRI":
             case "60 PIANI":
-                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M60);
+                return new CompetitionRunning(AbsCompetitionForTime.Distance.M60);
             case "80 METRI":
             case "80 PIANI":
-                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M80);
+                return new CompetitionRunning(AbsCompetitionForTime.Distance.M80);
             case "100 METRI":
-                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M100);
+                return new CompetitionRunning(AbsCompetitionForTime.Distance.M100);
             case "150 METRI":
-                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M150);
+                return new CompetitionRunning(AbsCompetitionForTime.Distance.M150);
             case "200 METRI":
-                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M200);
+                return new CompetitionRunning(AbsCompetitionForTime.Distance.M200);
             case "300 METRI":
             case "300 PIANI":
-                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M300);
+                return new CompetitionRunning(AbsCompetitionForTime.Distance.M300);
             case "400 METRI":
-                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M400);
+                return new CompetitionRunning(AbsCompetitionForTime.Distance.M400);
             case "600 METRI":
-                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M600);
+                return new CompetitionRunning(AbsCompetitionForTime.Distance.M600);
             case "800 METRI":
-                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M800);
+                return new CompetitionRunning(AbsCompetitionForTime.Distance.M800);
             case "1000 METRI":
-                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M1000);
+                return new CompetitionRunning(AbsCompetitionForTime.Distance.M1000);
             case "2000 METRI":
-                return new CompetitionRunning(AbsCompetitionWithDistance.Distance.M2000);
+                return new CompetitionRunning(AbsCompetitionForTime.Distance.M2000);
             case "MARCIA 1000M":
-                return new CompetitionMarch(AbsCompetitionWithDistance.Distance.M1000, false);
+                return new CompetitionMarch(AbsCompetitionForTime.Distance.M1000, false);
             case "MARCIA 2000M":
-                return new CompetitionMarch(AbsCompetitionWithDistance.Distance.KM2, false);
+                return new CompetitionMarch(AbsCompetitionForTime.Distance.KM2, false);
             case "MARCIA 3000M":
-                return new CompetitionMarch(AbsCompetitionWithDistance.Distance.KM3, false);
+                return new CompetitionMarch(AbsCompetitionForTime.Distance.KM3, false);
             case "MARCIA 4000M":
-                return new CompetitionMarch(AbsCompetitionWithDistance.Distance.KM4, false);
+                return new CompetitionMarch(AbsCompetitionForTime.Distance.KM4, false);
             case "MARCIA 5000M":
-                return new CompetitionMarch(AbsCompetitionWithDistance.Distance.KM5, false);
+                return new CompetitionMarch(AbsCompetitionForTime.Distance.KM5, false);
             case "MARCIA 10000M":
-                return new CompetitionMarch(AbsCompetitionWithDistance.Distance.KM10, false);
+                return new CompetitionMarch(AbsCompetitionForTime.Distance.KM10, false);
             case "MARCIA STRADA KM 10":
-                return new CompetitionMarch(AbsCompetitionWithDistance.Distance.KM10, true);
+                return new CompetitionMarch(AbsCompetitionForTime.Distance.KM10, true);
             case "50 HS H76 AF":
-                return new CompetitionHurdles(AbsCompetitionWithDistance.Distance.M50, CompetitionHurdles.Height.H76);
+                return new CompetitionHurdles(AbsCompetitionForTime.Distance.M50, CompetitionHurdles.Height.H76);
             case "60 HS- 5 HS H 60":
             case "60 HS H 60":
-                return new CompetitionHurdles(AbsCompetitionWithDistance.Distance.M50, CompetitionHurdles.Height.H60);
+                return new CompetitionHurdles(AbsCompetitionForTime.Distance.M50, CompetitionHurdles.Height.H60);
             case "60 HS H 76-8.50":
             case "60 HS H 76-8.00 CF":
-                return new CompetitionHurdles(AbsCompetitionWithDistance.Distance.M60, CompetitionHurdles.Height.H76);
+                return new CompetitionHurdles(AbsCompetitionForTime.Distance.M60, CompetitionHurdles.Height.H76);
             case "60 HS H 84-8.50":
             case "OSTACOLI M 60":
-                return new CompetitionHurdles(AbsCompetitionWithDistance.Distance.M60, CompetitionHurdles.Height.H84);
+                return new CompetitionHurdles(AbsCompetitionForTime.Distance.M60, CompetitionHurdles.Height.H84);
             case "60 HS H 91-9.14":
-                return new CompetitionHurdles(AbsCompetitionWithDistance.Distance.M60, CompetitionHurdles.Height.H91);
+                return new CompetitionHurdles(AbsCompetitionForTime.Distance.M60, CompetitionHurdles.Height.H91);
             case "60 HS H 100":
-                return new CompetitionHurdles(AbsCompetitionWithDistance.Distance.M60, CompetitionHurdles.Height.H100);
+                return new CompetitionHurdles(AbsCompetitionForTime.Distance.M60, CompetitionHurdles.Height.H100);
             case "60 HS H 106":
-                return new CompetitionHurdles(AbsCompetitionWithDistance.Distance.M60, CompetitionHurdles.Height.H106);
+                return new CompetitionHurdles(AbsCompetitionForTime.Distance.M60, CompetitionHurdles.Height.H106);
             case "80 HS H 76 CF":
-                return new CompetitionHurdles(AbsCompetitionWithDistance.Distance.M80, CompetitionHurdles.Height.H76);
+                return new CompetitionHurdles(AbsCompetitionForTime.Distance.M80, CompetitionHurdles.Height.H76);
             case "100 HS H 76-8.50":
-                return new CompetitionHurdles(AbsCompetitionWithDistance.Distance.M100, CompetitionHurdles.Height.H76);
+                return new CompetitionHurdles(AbsCompetitionForTime.Distance.M100, CompetitionHurdles.Height.H76);
             case "100 HS H 84-8.50":
-                return new CompetitionHurdles(AbsCompetitionWithDistance.Distance.M100, CompetitionHurdles.Height.H84);
+                return new CompetitionHurdles(AbsCompetitionForTime.Distance.M100, CompetitionHurdles.Height.H84);
             case "110 HS H 106":
-                return new CompetitionHurdles(AbsCompetitionWithDistance.Distance.M110, CompetitionHurdles.Height.H106);
+                return new CompetitionHurdles(AbsCompetitionForTime.Distance.M110, CompetitionHurdles.Height.H106);
             case "200 HS H76-18.29 M/F":
-                return new CompetitionHurdles(AbsCompetitionWithDistance.Distance.M200, CompetitionHurdles.Height.H76);
+                return new CompetitionHurdles(AbsCompetitionForTime.Distance.M200, CompetitionHurdles.Height.H76);
             case "300 HS H 76":
-                return new CompetitionHurdles(AbsCompetitionWithDistance.Distance.M300, CompetitionHurdles.Height.H76);
+                return new CompetitionHurdles(AbsCompetitionForTime.Distance.M300, CompetitionHurdles.Height.H76);
             case "400 HS H 84":
-                return new CompetitionHurdles(AbsCompetitionWithDistance.Distance.M400, CompetitionHurdles.Height.H84);
+                return new CompetitionHurdles(AbsCompetitionForTime.Distance.M400, CompetitionHurdles.Height.H84);
             case "400 HS H 91":
-                return new CompetitionHurdles(AbsCompetitionWithDistance.Distance.M400, CompetitionHurdles.Height.H91);
+                return new CompetitionHurdles(AbsCompetitionForTime.Distance.M400, CompetitionHurdles.Height.H91);
             case "SALTO IN LUNGO/LJ":
                 return new CompetitionHorizontalJump(CompetitionHorizontalJump.Type.LONG_JUMP);
             case "SALTO TRIPLO/TJ":
@@ -139,4 +142,7 @@ public abstract class AbsCompetition {
                 throw new FidalApi.ParseException("Unknown competition type: " + title);
         }
     }
+
+    @NonNull
+    public abstract V getCompetitionAnimationView(@NonNull Context context);
 }

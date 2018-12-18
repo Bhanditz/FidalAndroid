@@ -1,9 +1,11 @@
 package com.gianlu.fidal.NetIO.Models.Competitions;
 
-public final class CompetitionHorizontalJump extends AbsCompetition {
+import androidx.annotation.NonNull;
+
+public final class CompetitionHorizontalJump extends AbsCompetitionForHorizontalDistance {
     public final Type type;
 
-    CompetitionHorizontalJump(Type type) {
+    CompetitionHorizontalJump(@NonNull Type type) {
         this.type = type;
     }
 

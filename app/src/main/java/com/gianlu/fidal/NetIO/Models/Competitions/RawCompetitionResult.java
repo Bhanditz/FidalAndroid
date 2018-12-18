@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import androidx.annotation.NonNull;
 
 public class RawCompetitionResult {
+    public final AbsCompetition competition;
     public final long date;
     public final float performance;
     public final float wind;
@@ -22,7 +23,8 @@ public class RawCompetitionResult {
     public final ChronoType chronoType;
     public final String ranking;
 
-    public RawCompetitionResult(Element row) throws FidalApi.ParseException {
+    public RawCompetitionResult(Element row, @NonNull AbsCompetition competition) throws FidalApi.ParseException {
+        this.competition = competition;
         date = parseDate(row.child(0).text(), row.child(1).text());
         type = Type.parseType(row.child(2).text());
         chronoType = ChronoType.parse(row.child(3).text());
