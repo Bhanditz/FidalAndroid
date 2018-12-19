@@ -103,4 +103,5 @@
     <string name="competition_tripleJump">Triple jump</string>
     <string name="competition_march">March - %s</string>
     <string name="competition_hurdles">Hurdles - %s - %s</string>
+    <string name="windy">Windy</string>
 </resources>

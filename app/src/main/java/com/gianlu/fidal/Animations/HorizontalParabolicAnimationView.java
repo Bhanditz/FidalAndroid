@@ -13,6 +13,8 @@ import android.graphics.Rect;
 import android.util.TypedValue;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
+import com.gianlu.commonutils.FontsManager;
+
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
@@ -76,6 +78,7 @@ public class HorizontalParabolicAnimationView extends AbsCompetitionAnimationVie
         distanceTextPaint = new Paint();
         distanceTextPaint.setColor(Color.LTGRAY);
         distanceTextPaint.setTextSize(DISTANCE_TEXT_SIZE);
+        FontsManager.set(context, distanceTextPaint, FontsManager.ROBOTO_REGULAR);
     }
 
     private static double calcTrajectory(float x, float alpha, float a, float v0) {
@@ -165,6 +168,7 @@ public class HorizontalParabolicAnimationView extends AbsCompetitionAnimationVie
         invalidateOutline();
     }
 
+    @Override
     public void startAnimation() {
         if (currentAnimator != null) currentAnimator.start();
     }
@@ -183,6 +187,7 @@ public class HorizontalParabolicAnimationView extends AbsCompetitionAnimationVie
         }
     }
 
+    @Override
     public void resetAnimation() {
         bezierStart.x = paddingLeft;
         bezierStart.y = paddingTop;

@@ -8,4 +8,14 @@ public class TrackTimeAnimationView extends AbsCompetitionAnimationView { // TOD
     public TrackTimeAnimationView(@NonNull Context context) {
         super(context);
     }
+
+    @Override
+    public void startAnimation() {
+
+    }
+
+    @Override
+    public void resetAnimation() {
+
+    }
 }

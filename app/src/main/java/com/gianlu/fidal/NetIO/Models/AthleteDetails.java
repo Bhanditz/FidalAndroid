@@ -64,7 +64,7 @@ public class AthleteDetails {
         Element notWindy = tab.getElementsContainingOwnText("Non ventosi").first().nextElementSibling();
         parseRecordsTable(notWindy, false, list);
 
-        Element windy = tab.getElementsContainingOwnText("Ventosi").first().nextElementSibling();
+        Element windy = tab.getElementsContainingOwnText("Ventosi").get(1).nextElementSibling();
         parseRecordsTable(windy, true, list);
 
         return list;

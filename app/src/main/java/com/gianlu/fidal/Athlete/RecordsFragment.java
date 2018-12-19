@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RecordsFragment extends FragmentWithDialog implements RecordsAdapter.Listener { // TODO
+public class RecordsFragment extends FragmentWithDialog implements RecordsAdapter.Listener {
 
     @NonNull
     public static RecordsFragment getInstance(@NonNull Context context, @NonNull ArrayList<CompetitionRecord> records) {
@@ -55,6 +55,6 @@ public class RecordsFragment extends FragmentWithDialog implements RecordsAdapte
 
     @Override
     public void onRecordSelected(@NonNull CompetitionRecord record) {
-        new RecordBottomSheet().show(getActivity(), record); // FIXME
+        RecordBottomSheet.showSheet(getActivity(), record);
     }
 }

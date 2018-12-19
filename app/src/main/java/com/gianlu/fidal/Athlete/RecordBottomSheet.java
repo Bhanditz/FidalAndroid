@@ -9,9 +9,16 @@ import com.gianlu.fidal.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentActivity;
 
 public class RecordBottomSheet extends BaseModalBottomSheet<CompetitionRecord, Void> { // TODO
+    public static void showSheet(@Nullable FragmentActivity activity, @NonNull CompetitionRecord payload) {
+        RecordBottomSheet sheet = new RecordBottomSheet();
+        sheet.show(activity, payload);
+    }
+
     @Override
     protected boolean onCreateHeader(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent, @NonNull CompetitionRecord payload) {
         return false;

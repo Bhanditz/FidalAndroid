@@ -6,4 +6,14 @@ public class VerticalParabolicAnimationView extends AbsCompetitionAnimationView 
     public VerticalParabolicAnimationView(Context context) {
         super(context);
     }
+
+    @Override
+    public void startAnimation() {
+
+    }
+
+    @Override
+    public void resetAnimation() {
+
+    }
 }

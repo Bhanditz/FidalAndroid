@@ -6,7 +6,7 @@ import com.gianlu.fidal.R;
 
 import androidx.annotation.NonNull;
 
-public final class CompetitionPoleVault extends AbsCompetitionForVertialHeight {
+public final class CompetitionPoleVault extends AbsCompetitionForVerticalHeight {
     @NonNull
     @Override
     public String getText(@NonNull Context context) {

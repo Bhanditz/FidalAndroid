@@ -9,6 +9,7 @@ import com.gianlu.fidal.NetIO.FidalApi;
 
 import java.io.Serializable;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 
 public abstract class AbsCompetition<V extends AbsCompetitionAnimationView> implements Serializable, GetText {
@@ -148,4 +149,13 @@ public abstract class AbsCompetition<V extends AbsCompetitionAnimationView> impl
 
     @NonNull
     public abstract V getCompetitionAnimationView(@NonNull Context context);
+
+    @DrawableRes
+    public abstract int getIcon();
+
+    public abstract boolean hasWind();
+
+    public boolean twoDigitsPrecision() {
+        return true;
+    }
 }

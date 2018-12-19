@@ -12,4 +12,8 @@ public abstract class AbsCompetitionAnimationView extends View {
     public AbsCompetitionAnimationView(@NonNull Context context) {
         super(context, null, 0);
     }
+
+    public abstract void startAnimation();
+
+    public abstract void resetAnimation();
 }
