@@ -3,6 +3,7 @@ package com.gianlu.fidal.NetIO.Models.Competitions;
 import android.content.Context;
 
 import com.gianlu.fidal.Animations.VerticalParabolicAnimationView;
+import com.gianlu.fidal.NetIO.Models.BaseCompetitionResult;
 import com.gianlu.fidal.R;
 
 import androidx.annotation.NonNull;
@@ -10,7 +11,7 @@ import androidx.annotation.NonNull;
 public abstract class AbsCompetitionForVerticalHeight extends AbsCompetition<VerticalParabolicAnimationView> {
     @NonNull
     @Override
-    public VerticalParabolicAnimationView getCompetitionAnimationView(@NonNull Context context) {
+    public VerticalParabolicAnimationView getCompetitionAnimationView(@NonNull Context context, @NonNull BaseCompetitionResult result) {
         return new VerticalParabolicAnimationView(context);
     }
 

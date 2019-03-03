@@ -9,7 +9,7 @@ import org.jsoup.nodes.Element;
 
 import java.io.Serializable;
 
-public class CompetitionRecord implements Serializable {
+public class CompetitionRecord implements Serializable, BaseCompetitionResult {
     public final AbsCompetition competition;
     public final RawCompetitionResult.Type type;
     public final float performance;
@@ -27,5 +27,15 @@ public class CompetitionRecord implements Serializable {
         this.year = Integer.parseInt(element.child(4).text());
         this.place = element.child(5).text();
         this.windy = windy;
+    }
+
+    @Override
+    public float performance() {
+        return performance;
+    }
+
+    @Override
+    public float wind() {
+        return wind;
     }
 }

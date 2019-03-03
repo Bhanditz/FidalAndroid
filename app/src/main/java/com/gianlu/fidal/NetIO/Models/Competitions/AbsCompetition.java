@@ -6,6 +6,7 @@ import android.content.Context;
 import com.gianlu.commonutils.GetText;
 import com.gianlu.fidal.Animations.AbsCompetitionAnimationView;
 import com.gianlu.fidal.NetIO.FidalApi;
+import com.gianlu.fidal.NetIO.Models.BaseCompetitionResult;
 
 import java.io.Serializable;
 
@@ -148,7 +149,7 @@ public abstract class AbsCompetition<V extends AbsCompetitionAnimationView> impl
     }
 
     @NonNull
-    public abstract V getCompetitionAnimationView(@NonNull Context context);
+    public abstract V getCompetitionAnimationView(@NonNull Context context, @NonNull BaseCompetitionResult result);
 
     @DrawableRes
     public abstract int getIcon();

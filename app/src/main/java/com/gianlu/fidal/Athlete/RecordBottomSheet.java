@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.gianlu.commonutils.BottomSheet.BaseModalBottomSheet;
+import com.gianlu.fidal.Animations.AbsCompetitionAnimationView;
 import com.gianlu.fidal.NetIO.Models.CompetitionRecord;
 import com.gianlu.fidal.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,7 +27,11 @@ public class RecordBottomSheet extends BaseModalBottomSheet<CompetitionRecord, V
 
     @Override
     protected void onCreateBody(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent, @NonNull CompetitionRecord payload) {
+        isLoading(false);
 
+        AbsCompetitionAnimationView view = payload.competition.getCompetitionAnimationView(requireContext(), payload);
+        parent.addView(view);
+        view.startAnimation();
     }
 
     @Override

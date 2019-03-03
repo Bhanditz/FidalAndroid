@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.gianlu.commonutils.GetText;
 import com.gianlu.fidal.Animations.TrackTimeAnimationView;
+import com.gianlu.fidal.NetIO.Models.BaseCompetitionResult;
 import com.gianlu.fidal.R;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,7 @@ public abstract class AbsCompetitionForTime extends AbsCompetition<TrackTimeAnim
 
     @NonNull
     @Override
-    public TrackTimeAnimationView getCompetitionAnimationView(@NonNull Context context) {
+    public TrackTimeAnimationView getCompetitionAnimationView(@NonNull Context context, @NonNull BaseCompetitionResult result) {
         return new TrackTimeAnimationView(context);
     }
 

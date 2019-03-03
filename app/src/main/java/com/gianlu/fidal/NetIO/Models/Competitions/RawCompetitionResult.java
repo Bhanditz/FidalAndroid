@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.gianlu.commonutils.GetText;
 import com.gianlu.fidal.NetIO.FidalApi;
+import com.gianlu.fidal.NetIO.Models.BaseCompetitionResult;
 import com.gianlu.fidal.R;
 import com.gianlu.fidal.Utils;
 
@@ -15,7 +16,7 @@ import java.text.SimpleDateFormat;
 
 import androidx.annotation.NonNull;
 
-public class RawCompetitionResult {
+public class RawCompetitionResult implements BaseCompetitionResult {
     public final AbsCompetition competition;
     public final long date;
     public final float performance;
@@ -46,6 +47,16 @@ public class RawCompetitionResult {
         } catch (ParseException ex) {
             throw new FidalApi.ParseException(ex);
         }
+    }
+
+    @Override
+    public float performance() {
+        return performance;
+    }
+
+    @Override
+    public float wind() {
+        return wind;
     }
 
     public enum ChronoType {

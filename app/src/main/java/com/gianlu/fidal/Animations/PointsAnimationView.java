@@ -9,13 +9,15 @@ public class PointsAnimationView extends AbsCompetitionAnimationView { // TODO
         super(context);
     }
 
-    @Override
-    public void startAnimation() {
+    public void prepareAnimation(int points) {
 
     }
 
     @Override
-    public void resetAnimation() {
+    public void startAnimation() {
+    }
 
+    @Override
+    public void resetAnimation() {
     }
 }

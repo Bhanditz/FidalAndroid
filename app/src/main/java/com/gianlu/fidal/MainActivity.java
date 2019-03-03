@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.gianlu.commonutils.Dialogs.ActivityWithDialog;
 import com.gianlu.commonutils.RecyclerViewLayout;
 import com.gianlu.commonutils.Spinners.LabeledSpinner;
 import com.gianlu.commonutils.Toaster;
@@ -20,13 +21,12 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MainActivity extends AppCompatActivity implements FidalApi.OnResult<List<Event>>, EventsAdapter.Listener {
+public class MainActivity extends ActivityWithDialog implements FidalApi.OnResult<List<Event>>, EventsAdapter.Listener {
     private RecyclerViewLayout layout;
     private FidalApi api;
     private LabeledSpinner year;
@@ -108,8 +108,40 @@ public class MainActivity extends AppCompatActivity implements FidalApi.OnResult
             }
         }
 
+        AthleteActivity.startActivity(this, "http://www.fidal.it/atleta/Giulia-Guarriello/erGRkpSib2w%3D");
+
         api = FidalApi.get();
         somethingChanged();
+
+/*
+        List<String> list = Arrays.asList("http://www.fidal.it/atleta/Gianluca-Altomani/erGRkpSnbWU%3D",
+                "http://www.fidal.it/atleta/Ismaele-Landini/erGRkpWna2U%3D",
+                "http://www.fidal.it/atleta/Lorenzo-Pazzi/eqiRlZafcGM%3D",
+                "http://www.fidal.it/atleta/Siria-Bigi/erGRkpWobmQ%3D",
+                "http://www.fidal.it/atleta/Andrea-Copelli/erGRkpWoa2s%3D",
+                "http://www.fidal.it/atleta/Davide-Marchio-/erGRkpSlaWs%3D",
+                "http://www.fidal.it/atleta/Giulia-Guarriello/erGRkpSib2w%3D",
+                "http://www.fidal.it/atleta/Veronica-Castellani/eq6RkpmgamY%3D",
+                "http://www.fidal.it/atleta/Cristiano-Bertoli/erGRkpSfcGk%3D",
+                "http://www.fidal.it/atleta/Elia-Maccari/erGRkpOibWc%3D",
+                "http://www.fidal.it/atleta/Gertrud-Bacher-Schoepf/iaiRkpKjaGs%3D",
+                "http://www.fidal.it/atleta/Gennaro-Di-Napoli/dqiRkpSlbWM%3D");
+
+        for (String item : list) {
+            api.getAthleteDetails(item, new FidalApi.OnResult<AthleteDetails>() {
+                @Override
+                public void result(@NonNull AthleteDetails result) {
+                    System.out.println("OK: " + item + ": " + result);
+                }
+
+                @Override
+                public void exception(@NonNull Exception ex) {
+                    System.out.println("FAILED: " + item);
+                    ex.printStackTrace();
+                }
+            });
+        }
+        */
     }
 
     private void setInputFromUrl(@NonNull Uri url) throws FidalApi.ParseException {
